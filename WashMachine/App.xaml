@@ -1,0 +1,14 @@
+﻿<Application
+    x:Class="WashMachine.App"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:WashMachine"
+    xmlns:converters="using:WashMachine.Converters"
+    RequestedTheme="Light">
+    <Application.Resources>
+        <ResourceDictionary>
+            <FontFamily x:Key="FontAwesomeFontFamily">/Styles/FontAwesome.otf#FontAwesome</FontFamily>
+            <converters:ObjectToBoolConverter x:Key="ObjectToBoolConverter"></converters:ObjectToBoolConverter>
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>
