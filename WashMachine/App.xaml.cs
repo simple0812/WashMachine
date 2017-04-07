@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Threading.Tasks;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.Foundation;
@@ -16,7 +18,10 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using WashMachine.Devices;
 using WashMachine.Enums;
+using WashMachine.Libs;
 using WashMachine.Models;
+using WashMachine.Protocols.Helper;
+using WashMachine.Protocols.SimDirectives;
 
 namespace WashMachine
 {
@@ -93,6 +98,21 @@ namespace WashMachine
                 }
                 // 确保当前窗口处于活动状态
                 Window.Current.Activate();
+
+                Task.Run(() =>
+                {
+                    SimWorker.Instance.Enqueue(new LocationCompositeDirective(x =>
+                    {
+                        var cnetScans = x.Result as CnetScan;
+                        if (cnetScans == null) return;
+                        var url =
+                            $"http://211.152.35.57:8103/api/sim/location?mcc={cnetScans.MCC}&mnc={cnetScans.MNC}&lac={cnetScans.Lac}&ci={cnetScans.Cellid}&deviceid={Common.GetUniqueId()}";
+                        SimWorker.Instance.Enqueue(new HttpCompositeDirective(url, p =>
+                        {
+                            Debug.WriteLine(p.Result);
+                        }));
+                    }));
+                });
             }
         }
 

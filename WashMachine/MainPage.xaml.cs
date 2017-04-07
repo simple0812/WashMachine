@@ -59,6 +59,12 @@ namespace WashMachine
                         var x = mainFrame.Content as FullFlow;
                         x?.initData(null);
                     }
+
+                    if (type == typeof(ConcentrateFlow))
+                    {
+                        var x = mainFrame.Content as ConcentrateFlow;
+                        x?.initData(null);
+                    }
                 }
                 else
                 {
@@ -76,6 +82,12 @@ namespace WashMachine
                     if (type == typeof(FullFlow))
                     {
                         var x = mainFrame.Content as FullFlow;
+                        x?.initData(arg2?.Data);
+                    }
+
+                    if (type == typeof(ConcentrateFlow))
+                    {
+                        var x = mainFrame.Content as ConcentrateFlow;
                         x?.initData(arg2?.Data);
                     }
                 }
@@ -104,16 +116,21 @@ namespace WashMachine
             {
                 mainSplitView.IsPaneOpen = false;
                 _preSelectNavigation = mainNavigationList.SelectedIndex;
+                mainFrame.Navigate(typeof(ConcentrateFlow));
+            }
+            else if (tapped_item?.Tag != null && tapped_item.Tag.ToString().Equals("2")) //简单流程
+            {
+                mainSplitView.IsPaneOpen = false;
+                _preSelectNavigation = mainNavigationList.SelectedIndex;
                 mainFrame.Navigate(typeof(SimpleFlow));
             }
-            if (tapped_item?.Tag != null && tapped_item.Tag.ToString().Equals("2")) //完整流程
+            else if (tapped_item?.Tag != null && tapped_item.Tag.ToString().Equals("3")) //完整流程
             {
                 mainSplitView.IsPaneOpen = false;
                 _preSelectNavigation = mainNavigationList.SelectedIndex;
                 mainFrame.Navigate(typeof(FullFlow));
             }
-
-            if (tapped_item?.Tag != null && tapped_item.Tag.ToString().Equals("3")) //流程列表
+            else if (tapped_item?.Tag != null && tapped_item.Tag.ToString().Equals("4")) //流程列表
             {
                 mainSplitView.IsPaneOpen = false;
                 _preSelectNavigation = mainNavigationList.SelectedIndex;
@@ -135,17 +152,21 @@ namespace WashMachine
         private void MainFrame_OnNavigated(object sender, NavigationEventArgs e)
         {
             var type = e.Content.GetType();
-            if (type == typeof (FullFlow))
-            {
-                mainNavigationList.SelectedIndex = 2;
-            }
-            if (type == typeof(SimpleFlow))
+            if (type == typeof(ConcentrateFlow))
             {
                 mainNavigationList.SelectedIndex = 1;
             }
-            if (type == typeof(History))
+            else if (type == typeof(SimpleFlow))
+            {
+                mainNavigationList.SelectedIndex = 2;
+            }
+            else if (type == typeof (FullFlow))
             {
                 mainNavigationList.SelectedIndex = 3;
+            }
+            else if (type == typeof(History))
+            {
+                mainNavigationList.SelectedIndex = 4;
             }
         }
     }

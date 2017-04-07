@@ -16,6 +16,7 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using WashMachine.Controls;
 using WashMachine.Enums;
 using WashMachine.Libs;
 using WashMachine.Models;
@@ -50,6 +51,14 @@ namespace WashMachine
 
         private async void BtnStart_OnClick(object sender, RoutedEventArgs e)
         {
+            var p = ApplicationData.Current.LocalSettings.Values;
+            if (!(p.ContainsKey("ConsumableSerialNumber") && p.ContainsKey("ConsumableType") &&
+                p.ContainsKey("ConsumableUsedTimes")))
+            {
+                new TopPopup().Show("请扫描二维码添加耗材");
+                return;
+            }
+
             var washFlow = GetWashFlow();
             if (washFlow == null) return;
             this.DataContext = washFlow;
@@ -89,7 +98,6 @@ namespace WashMachine
         {
             await Logic.Instance.Close();
             App.Status = SysStatusEnum.Discarded;
-            btnStart.IsEnabled = true;
             Logic.Instance.End();
         }
 
@@ -98,6 +106,7 @@ namespace WashMachine
             var p = data as PumpDirectiveData;
             if (p == null)
             {
+                btnStart.IsEnabled = true;
                 spEdit.IsHitTestVisible = true;
                 spEdit.Background = new SolidColorBrush(Colors.White);
                 pbAppend.IsActive = false;
@@ -136,36 +145,36 @@ namespace WashMachine
 
             if (string.IsNullOrEmpty(name))
             {
-                txtRet.Text = "流程名称不能为空";
+                new TopPopup().Show("流程名称不能为空");
                 return null;
             }
 
             if (washSpeed <= 0)
             {
-                txtRet.Text = "加液速度必须大于0";
+                new TopPopup().Show("加液速度必须大于0");
                 return null;
             }
 
             if (washVolume <= 0)
             {
-                txtRet.Text = "加液量必须大于0";
+                new TopPopup().Show("加液量必须大于0");
                 return null;
             }
             if (conVolume <= 0)
             {
-                txtRet.Text = "浓缩体积必须大于0";
+                new TopPopup().Show("浓缩体积必须大于0");
                 return null;
             }
 
             if (conSpeed <= 0)
             {
-                txtRet.Text = "浓缩速度必须大于0";
+                new TopPopup().Show("浓缩速度必须大于0");
                 return null;
             }
 
             if (conTimes <= 0)
             {
-                txtRet.Text = "浓缩次数必须大于0";
+                new TopPopup().Show("浓缩次数必须大于0");
                 return null;
             }
 

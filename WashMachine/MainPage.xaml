@@ -21,7 +21,19 @@
                                        FontFamily="Segoe MDL2 Assets"/>
                         </StackPanel>
                     </ListBoxItem>
-                    <ListBoxItem Tag="1" Tapped="ListBoxItem_Tapped" Name="homeItem">
+                    <ListBoxItem Tag="1" Tapped="ListBoxItem_Tapped" Name="conItem">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="&#xEA3A;" 
+                                       FontSize="20" 
+                                       FontFamily="Segoe MDL2 Assets"
+                                       Padding="0,4,0,0"/>
+                            <TextBlock Text="浓缩流程" 
+                                       FontSize="18"
+                                       FontFamily="微软雅黑"
+                                       Margin="12,0,0,0"/>
+                        </StackPanel>
+                    </ListBoxItem>
+                    <ListBoxItem Tag="2" Tapped="ListBoxItem_Tapped" Name="simpleItem">
                         <StackPanel Orientation="Horizontal">
                             <TextBlock Text="&#xE958;" 
                                        FontSize="20" 
@@ -33,7 +45,7 @@
                                        Margin="12,0,0,0"/>
                         </StackPanel>
                     </ListBoxItem>
-                    <ListBoxItem Tag="2" Tapped="ListBoxItem_Tapped" Name="newsItem">
+                    <ListBoxItem Tag="3" Tapped="ListBoxItem_Tapped" Name="fullItem">
                         <StackPanel Orientation="Horizontal">
                             <TextBlock Text="&#xE95A;" 
                                        FontSize="20" 
@@ -46,7 +58,7 @@
                                        Margin="12,0,0,0"/>
                         </StackPanel>
                     </ListBoxItem>
-                    <ListBoxItem Tag="3" Tapped="ListBoxItem_Tapped" >
+                    <ListBoxItem Tag="4" Tapped="ListBoxItem_Tapped" >
                         <StackPanel Orientation="Horizontal">
                             <TextBlock Text="&#xEA42;" 
                                        FontSize="20" 

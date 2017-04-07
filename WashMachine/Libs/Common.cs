@@ -39,5 +39,26 @@ namespace WashMachine.Libs
                 //   
             }
         }
+
+        public static void SetData(string key, object value)
+        {
+            ApplicationData.Current.LocalSettings.Values[key] = value;
+        }
+
+        public static string GetData(string key)
+        {
+            if (ApplicationData.Current.LocalSettings.Values.ContainsKey(key))
+            {
+                return ApplicationData.Current.LocalSettings.Values[key].ToString();
+            }
+
+            return "";
+        }
+
+        public static string GetUniqueId()
+        {
+            HardwareToken token = HardwareIdentification.GetPackageSpecificToken(null);
+            return CryptographyHelper.Md5Encrypt(token.Id);
+        }
     }
 }

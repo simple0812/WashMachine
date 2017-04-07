@@ -5,6 +5,7 @@
     xmlns:local="using:WashMachine"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:controls="using:WashMachine.Controls"
     mc:Ignorable="d">
     <Page.Resources>
         <ControlTemplate x:Key="ctButton">
@@ -45,6 +46,7 @@
                 <TextBox  Text="{Binding CollectVolume, Mode=OneTime}" x:Name="txtColVolume" Header="收集量(ml)" Width="170"></TextBox>
                 <TextBox  Text="{Binding CollectSpeed, Mode=OneTime}" x:Name="txtColSpeed" Header="收集速度(ml/min)" Width="170"></TextBox>
                 <TextBox  Text="{Binding CollectTimes, Mode=OneTime}" x:Name="txtColTimes" Header="收集循环次数" Width="170"></TextBox>
+                <controls:QrCodeInfo x:Name="qrCtrl"></controls:QrCodeInfo>
             </StackPanel>
             <StackPanel Grid.Column="1">
                 <TextBlock x:Name="txtRet"></TextBlock>

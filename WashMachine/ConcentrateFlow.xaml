@@ -1,5 +1,5 @@
 ﻿<Page
-    x:Class="WashMachine.SimpleFlow"
+    x:Class="WashMachine.ConcentrateFlow"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:WashMachine"
@@ -38,21 +38,14 @@
                 <ColumnDefinition Width="3.5*"></ColumnDefinition>
             </Grid.ColumnDefinitions>
             <StackPanel  x:Name="spEdit" HorizontalAlignment="Left" Padding="20" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-                <TextBox  Text="{Binding Name, Mode=OneTime}" x:Name="txtName" Header="名称" Width="170"></TextBox>
-                <TextBox  Text="{Binding WashVolume, Mode=OneTime}" x:Name="txtWashVolume" Header="加液量(ml)" Width="170"></TextBox>
-                <TextBox  Text="{Binding WashSpeed, Mode=OneTime}" x:Name="txtWashSpeed" Header="加液速度(ml/min)" Width="170"></TextBox>
-                <TextBox  Text="{Binding ConcentrateVolume, Mode=OneTime}" x:Name="txtConVolume" Header="浓缩留存体积(ml)" Width="170"></TextBox>
-                <TextBox  Text="{Binding ConcentrateSpeed, Mode=OneTime}" x:Name="txtConSpeed" Header="浓缩速度(ml/min)" Width="170"></TextBox>
-                <TextBox  Text="{Binding ConcentrateTimes, Mode=OneTime}" x:Name="txtConTimes" Header="浓缩循环次数" Width="170"></TextBox>
+                <TextBox  Text="10" x:Name="txtConVolume" Header="浓缩体积(ml)" Width="170"></TextBox>
+                <TextBox  Text="20" x:Name="txtConSpeed" Header="浓缩速度(ml/min)" Width="170"></TextBox>
                 <controls:QrCodeInfo x:Name="qrCtrl"></controls:QrCodeInfo>
             </StackPanel>
             <StackPanel Grid.Column="1">
                 <TextBlock x:Name="txtRet"></TextBlock>
                 <TextBlock x:Name="txt" Text=""></TextBlock>
                 <Canvas >
-                    <Border Width="50"  Height="150" Canvas.Top="300" BorderBrush="Black" BorderThickness="2">
-                        <TextBlock Text="清洗液" VerticalAlignment="Center"  HorizontalAlignment="Center"  ></TextBlock>
-                    </Border>
 
                     <Border Width="50"  Height="50" Canvas.Left ="250"  Canvas.Top="300" BorderBrush="Black" BorderThickness="2">
                         <TextBlock Text="浓缩" VerticalAlignment="Center"  HorizontalAlignment="Center"  ></TextBlock>
@@ -73,33 +66,11 @@
                         </TextBlock>
                     </Border>
 
-                    <Border Width="235" Height="100" BorderBrush="Brown" BorderThickness="2 2 2 0" Canvas.Left="25" Canvas.Top="201"></Border>
                     <Border Width="260" Height="250" BorderBrush="Orange" BorderThickness="2 2 0 0" Canvas.Left="270" Canvas.Top="51"></Border>
                     <Line X1="530" Y1="51" X2="530" Y2="101" StrokeThickness="2"  Stroke="DarkGreen"></Line>
                     <Border Width="500" Height="200" BorderBrush="Orange" BorderThickness="2 2 2 0" Canvas.Left="280" Canvas.Top="101"></Border>
 
-                    <Button Content="泵1" Tag="True" Template="{StaticResource ctButton}" Width="50" Height="50" Canvas.Top="175" Canvas.Left="120">
-                        <Button.Flyout>
-                            <Flyout>
-                                <StackPanel>
-                                    <TextBlock Text="加液量："><Run Text="{Binding WashVolume, Mode=OneTime}"></Run><Run>ml</Run></TextBlock>
-                                    <TextBlock Text="速度："><Run Text="{Binding WashSpeed, Mode=OneTime}"></Run><Run>ml/min</Run></TextBlock>
-                                </StackPanel>
-                            </Flyout>
-                        </Button.Flyout>
-                    </Button>
-                    <ProgressRing Width="50" x:Name="pbAppend" Height="50" IsActive="False" Canvas.Top="175" Canvas.Left="120"></ProgressRing>
-
                     <Button Content="泵2" Template="{StaticResource ctButton}" Width="50" Height="50" Canvas.Left="385" Canvas.Top="25">
-                        <Button.Flyout>
-                            <Flyout>
-                                <StackPanel>
-                                    <TextBlock Text="浓缩量："><Run Text="{Binding ConcentrateVolume, Mode=OneTime}"></Run><Run>ml</Run></TextBlock>
-                                    <TextBlock Text="速度："><Run Text="{Binding ConcentrateSpeed, Mode=OneTime}"></Run><Run>ml/min</Run></TextBlock>
-                                    <TextBlock Text="次数："><Run Text="{Binding ConcentrateTimes, Mode=OneTime}"></Run></TextBlock>
-                                </StackPanel>
-                            </Flyout>
-                        </Button.Flyout>
                     </Button>
                     <ProgressRing Width="50" x:Name="pbConcentrate" Height="50" IsActive="False" Canvas.Left="385" Canvas.Top="25"></ProgressRing>
 
@@ -112,7 +83,6 @@
                 <StackPanel Orientation="Horizontal">
                 </StackPanel>
             </CommandBar.Content>
-            <AppBarButton x:Name="btnSave" Icon="Save" Label="Save" Click="BtnSave_OnClick"/>
             <AppBarButton x:Name="btnStart" Icon="Play" Label="Start" Click="BtnStart_OnClick"/>
             <AppBarButton x:Name="btnStop" Icon="Refresh" Label="Restart" Click="BtnStop_OnClick"/>
         </CommandBar>

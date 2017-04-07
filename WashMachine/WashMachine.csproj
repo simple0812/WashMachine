@@ -95,7 +95,19 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ConcentrateFlow.xaml.cs">
+      <DependentUpon>ConcentrateFlow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\QrCodeDialog.xaml.cs">
+      <DependentUpon>QrCodeDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\QrCodeInfo.xaml.cs">
+      <DependentUpon>QrCodeInfo.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\SwipeableSplitView.cs" />
+    <Compile Include="Controls\TopPopup.xaml.cs">
+      <DependentUpon>TopPopup.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Converters\ObjectToBoolConverter.cs" />
     <Compile Include="DbHelper.cs" />
     <Compile Include="Devices\DeviceBase.cs" />
@@ -122,6 +134,7 @@
     <Compile Include="Libs\AsyncManualResetEvent.cs" />
     <Compile Include="Libs\AsyncSemaphore.cs" />
     <Compile Include="Libs\Common.cs" />
+    <Compile Include="Libs\CryptographyHelper.cs" />
     <Compile Include="Libs\Logic.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
@@ -131,6 +144,7 @@
     <Compile Include="Models\CustomException.cs" />
     <Compile Include="Models\DeviceIOResult.cs" />
     <Compile Include="Models\DirectiveResult.cs" />
+    <Compile Include="Models\JsonResult.cs" />
     <Compile Include="Models\WashFlow.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Protocols\Directives\BaseDirective.cs" />
@@ -203,6 +217,22 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="ConcentrateFlow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\QrCodeDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\QrCodeInfo.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\TopPopup.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="FullFlow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

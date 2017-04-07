@@ -22,11 +22,11 @@ namespace WashMachine.Protocols.SimDirectives
             IsExecOk = isOk;
         }
 
-        public SimDirectiveResult(bool status,bool isOk, Object code,string msg = "")
+        public SimDirectiveResult(bool status,bool isOk, Object result,string msg = "")
         {
             Status = status;
             IsExecOk = isOk;
-            Code = code;
+            Result = result;
             Message = msg;
         }
 
@@ -34,6 +34,6 @@ namespace WashMachine.Protocols.SimDirectives
         public string Message { get; set; } //解析失败的原因
 
         public bool IsExecOk { get; set; } //指令是否正确执行
-        public object Code { get; set; } //解析的结果
+        public object Result { get; set; } //解析的结果
     }
 }

@@ -47,10 +47,6 @@ namespace WashMachine.Libs
                         Dispose();
                     }
                 }
-
-                await task;
-                Dispose();
-
             }
             catch (Exception)
             {
@@ -122,6 +118,7 @@ namespace WashMachine.Libs
 
         private void CaptureCustomExceptionEvent(CustomException obj)
         {
+            End();
             //service.OnErrorEvent(obj);
         }
 
