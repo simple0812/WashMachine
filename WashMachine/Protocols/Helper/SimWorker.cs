@@ -69,7 +69,7 @@ namespace WashMachine.Protocols.Helper
                 }
             });
 
-            serialPort = new SerialPortHelper("Silicon Labs CP210x USB to UART Bridge (COM4)");
+            serialPort = SerialCreater.Instance.Create("Silicon Labs CP210x USB to UART Bridge (COM4)");
             serialPort.ReceiveHandler += SerialPort_ReceiveHandler;
         }
 
@@ -105,7 +105,7 @@ namespace WashMachine.Protocols.Helper
         
         public void Enqueue(CompositeDirective directive)
         {
-            if(waitForSendDirectives.Count < 10000)
+            if(waitForSendDirectives.Count < 500)
                 waitForSendDirectives.Enqueue(directive);
         }
 

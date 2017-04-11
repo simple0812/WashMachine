@@ -68,7 +68,7 @@ namespace WashMachine
             App.Status = SysStatusEnum.Starting;
             btnStart.IsEnabled = false;
 
-            await Logic.Instance.pump2.SetParams(conSpeed, conVolume).StartAsync();
+            await Logic.Instance.pump1.SetParams(conSpeed, conVolume).StartAsync();
 
             App.Status = SysStatusEnum.Completed;
             btnStart.IsEnabled = true;
@@ -102,7 +102,7 @@ namespace WashMachine
 
             if (p.DirectiveType == DirectiveTypeEnum.TryStart)
             {
-                pbConcentrate.IsActive = p.DeviceId == 2;
+                pbConcentrate.IsActive = p.DeviceId == 1;
             }
         }
 

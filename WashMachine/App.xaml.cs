@@ -109,7 +109,6 @@ namespace WashMachine
                             $"http://211.152.35.57:8103/api/sim/location?mcc={cnetScans.MCC}&mnc={cnetScans.MNC}&lac={cnetScans.Lac}&ci={cnetScans.Cellid}&deviceid={Common.GetUniqueId()}";
                         SimWorker.Instance.Enqueue(new HttpCompositeDirective(url, p =>
                         {
-                            Debug.WriteLine(p.Result);
                         }));
                     }));
                 });

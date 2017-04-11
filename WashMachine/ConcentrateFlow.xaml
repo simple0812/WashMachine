@@ -70,7 +70,7 @@
                     <Line X1="530" Y1="51" X2="530" Y2="101" StrokeThickness="2"  Stroke="DarkGreen"></Line>
                     <Border Width="500" Height="200" BorderBrush="Orange" BorderThickness="2 2 2 0" Canvas.Left="280" Canvas.Top="101"></Border>
 
-                    <Button Content="泵2" Template="{StaticResource ctButton}" Width="50" Height="50" Canvas.Left="385" Canvas.Top="25">
+                    <Button Content="泵" Template="{StaticResource ctButton}" Width="50" Height="50" Canvas.Left="385" Canvas.Top="25">
                     </Button>
                     <ProgressRing Width="50" x:Name="pbConcentrate" Height="50" IsActive="False" Canvas.Left="385" Canvas.Top="25"></ProgressRing>
 
