@@ -17,8 +17,8 @@ namespace WashMachine.Libs
     public sealed class Logic
     {
         public  PumpDevice pump1 = new PumpDevice(1);
-        public  PumpDevice pump2 = new PumpDevice(2, DirectionEnum.Out);
-        public  PumpDevice pump3 = new PumpDevice(3, DirectionEnum.Out);
+        public  PumpDevice pump2 = new PumpDevice(2);
+        public  PumpDevice pump3 = new PumpDevice(3);
         public  WashFlow WashFlow { get; set; }
 
         public static readonly Logic Instance = new Logic();
@@ -44,7 +44,7 @@ namespace WashMachine.Libs
                 {
                     if (task != await Task.WhenAny(task, cancellationCompletionSource.Task))
                     {
-                        Dispose();
+                        Debug.WriteLine("close timeout");
                     }
                 }
             }
@@ -54,9 +54,10 @@ namespace WashMachine.Libs
             }
             finally
             {
+                Dispose();
                 pump1 = new PumpDevice(1);
-                pump2 = new PumpDevice(2, DirectionEnum.Out);
-                pump3 = new PumpDevice(3, DirectionEnum.Out);
+                pump2 = new PumpDevice(2);
+                pump3 = new PumpDevice(3);
                 AttactchEventHanlder(pump1);
                 AttactchEventHanlder(pump2);
                 AttactchEventHanlder(pump3);
@@ -79,6 +80,9 @@ namespace WashMachine.Libs
         {
             try
             {
+                DetactchEventHanlder(pump1);
+                DetactchEventHanlder(pump2);
+                DetactchEventHanlder(pump3);
                 pump1.Dispose();
                 pump2.Dispose();
                 pump3.Dispose();

@@ -89,7 +89,7 @@ namespace WashMachine.Controls
 
                         this.Hide();
                     }
-                    catch (Exception e)
+                    catch (Exception)
                     {
                         txtRet.Text = "未知的异常";
                     }

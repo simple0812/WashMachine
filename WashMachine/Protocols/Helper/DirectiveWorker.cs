@@ -30,8 +30,8 @@ namespace WashMachine.Protocols.Helper
 
         private DirectiveWorker()
         {
-            serialPort = SerialCreater.Instance.Create();
-//            serialPort = SerialCreater.Instance.Create("QM-USB-COM");
+//            serialPort = SerialCreater.Instance.Create();
+            serialPort = SerialCreater.Instance.Create("QM-USB-COM");
             Init();
         }
 

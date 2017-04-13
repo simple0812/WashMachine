@@ -39,13 +39,13 @@ namespace WashMachine
 
         private async void BtnStart_OnClick(object sender, RoutedEventArgs e)
         {
-            var p = ApplicationData.Current.LocalSettings.Values;
-            if (!(p.ContainsKey("ConsumableSerialNumber") && p.ContainsKey("ConsumableType") &&
-                p.ContainsKey("ConsumableUsedTimes")))
-            {
-                new TopPopup().Show("请扫描二维码添加耗材");
-                return;
-            }
+//            var p = ApplicationData.Current.LocalSettings.Values;
+//            if (!(p.ContainsKey("ConsumableSerialNumber") && p.ContainsKey("ConsumableType") &&
+//                p.ContainsKey("ConsumableUsedTimes")))
+//            {
+//                new TopPopup().Show("请扫描二维码添加耗材");
+//                return;
+//            }
 
             int conVolume = int.TryParse(txtConVolume.Text, out conVolume) ? conVolume : -1;
             int conSpeed = int.TryParse(txtConSpeed.Text, out conSpeed) ? conSpeed : -1;
@@ -105,7 +105,5 @@ namespace WashMachine
                 pbConcentrate.IsActive = p.DeviceId == 1;
             }
         }
-
-        
     }
 }

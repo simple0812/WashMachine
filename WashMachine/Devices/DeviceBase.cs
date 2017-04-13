@@ -100,7 +100,6 @@ namespace WashMachine.Devices
 //                {
 //                    return new DeviceIOResult(true);
 //                }
-
                 var directive = GenerateTryStartDirective();
 
                 OnPreCommunicationEvent(directive);

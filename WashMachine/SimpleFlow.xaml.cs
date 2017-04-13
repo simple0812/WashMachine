@@ -51,13 +51,13 @@ namespace WashMachine
 
         private async void BtnStart_OnClick(object sender, RoutedEventArgs e)
         {
-            var p = ApplicationData.Current.LocalSettings.Values;
-            if (!(p.ContainsKey("ConsumableSerialNumber") && p.ContainsKey("ConsumableType") &&
-                p.ContainsKey("ConsumableUsedTimes")))
-            {
-                new TopPopup().Show("请扫描二维码添加耗材");
-                return;
-            }
+//            var p = ApplicationData.Current.LocalSettings.Values;
+//            if (!(p.ContainsKey("ConsumableSerialNumber") && p.ContainsKey("ConsumableType") &&
+//                p.ContainsKey("ConsumableUsedTimes")))
+//            {
+//                new TopPopup().Show("请扫描二维码添加耗材");
+//                return;
+//            }
 
             var washFlow = GetWashFlow();
             if (washFlow == null) return;
@@ -71,11 +71,13 @@ namespace WashMachine
             Logic.Instance.pump1.SetParams(washFlow.WashSpeed, washFlow.WashVolume);
             Logic.Instance.pump2.SetParams(washFlow.ConcentrateSpeed, washFlow.ConcentrateVolume);
 
-            for (var i = 0; i < 3; i++)
+            for (var i = 0; i < washFlow.ConcentrateTimes; i++)
             {
                 txtRet.Text = $"第{i + 1}次加液开始...";
+                await Task.Delay(20);
                 await Logic.Instance.pump1.StartAsync();
                 txtRet.Text = $"第{i + 1}次浓缩开始...";
+                await Task.Delay(20);
                 await Logic.Instance.pump2.StartAsync();
             }
 

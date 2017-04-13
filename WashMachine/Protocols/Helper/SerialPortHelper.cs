@@ -113,7 +113,7 @@ namespace WashMachine.Protocols.Helper
                             var xdata = new byte[bytesRead];
                             dataReader.ReadBytes(xdata);
                             dataReader.DetachBuffer();
-                            Debug.WriteLine("receive ->" + Common.BytesToString(xdata));
+                            LocalLog.Instance.Info("receive ->" + Common.BytesToString(xdata));
                             OnReceiveHandler(xdata);
                         }
 
@@ -152,7 +152,7 @@ namespace WashMachine.Protocols.Helper
             {
                 if (buffer.Length != 0)
                 {
-                    Debug.WriteLine("send ->" + Common.BytesToString(buffer));
+                    LocalLog.Instance.Info("send ->" + Common.BytesToString(buffer));
                     dataWriter.WriteBytes(buffer);
 
                     var storeAsyncTask = dataWriter.StoreAsync().AsTask(token);

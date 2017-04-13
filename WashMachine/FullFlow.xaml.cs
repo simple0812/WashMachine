@@ -75,7 +75,7 @@ namespace WashMachine
             Logic.Instance.pump2.SetParams(washFlow.ConcentrateSpeed, washFlow.ConcentrateVolume);
             Logic.Instance.pump3.SetParams(washFlow.CollectSpeed, 0);
 
-            for (var i = 0; i < 3; i++)
+            for (var i = 0; i < washFlow.ConcentrateTimes; i++)
             {
                 txtRet.Text = $"第{i + 1}次加液开始...";
                 await Logic.Instance.pump1.StartAsync();
@@ -88,7 +88,7 @@ namespace WashMachine
             await Logic.Instance.pump3.StartAsync();
             if (per > 0)
             {
-                for (var i = 0; i < 3; i++)
+                for (var i = 0; i < washFlow.CollectTimes; i++)
                 {
                     txtRet.Text = $"第{i + 1}次收集细胞，加液开始";
                     await Logic.Instance.pump1.SetParams(washFlow.WashSpeed, per + 10).StartAsync();

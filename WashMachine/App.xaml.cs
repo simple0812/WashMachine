@@ -101,6 +101,8 @@ namespace WashMachine
 
                 Task.Run(() =>
                 {
+                    DbHelper.GetDbConnection();
+//                    var conn = DbHelper.GetDbConnection();
                     SimWorker.Instance.Enqueue(new LocationCompositeDirective(x =>
                     {
                         var cnetScans = x.Result as CnetScan;
