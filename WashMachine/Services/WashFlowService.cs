@@ -52,6 +52,7 @@ namespace WashMachine.Services
             using (var db = new MyDbContext())
             {
                 db.WashFlows.Remove(flow);
+                db.SaveChanges();
                 return true;
             }
         }
