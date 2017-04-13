@@ -16,6 +16,7 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using Microsoft.EntityFrameworkCore;
 using WashMachine.Devices;
 using WashMachine.Enums;
 using WashMachine.Libs;
@@ -52,6 +53,7 @@ namespace WashMachine
         {
             this.InitializeComponent();
             this.Suspending += OnSuspending;
+            InitDB();
         }
 
         /// <summary>
@@ -101,8 +103,6 @@ namespace WashMachine
 
                 Task.Run(() =>
                 {
-                    DbHelper.GetDbConnection();
-//                    var conn = DbHelper.GetDbConnection();
                     SimWorker.Instance.Enqueue(new LocationCompositeDirective(x =>
                     {
                         var cnetScans = x.Result as CnetScan;
@@ -114,6 +114,28 @@ namespace WashMachine
                         }));
                     }));
                 });
+            }
+        }
+
+        private void InitDB()
+        {
+            using (var db = new MyDbContext())
+            {
+                db.Database.EnsureCreated();
+                string sql = "CREATE TABLE IF NOT EXISTS WashFlow(" +
+                             "Id INTEGER PRIMARY KEY autoincrement," +
+                             "FlowType int," +
+                             "Name varchar(50)," +
+                             "WashVolume FLOAT," +
+                             "WashSpeed FLOAT," +
+                             "ConcentrateVolume FLOAT," +
+                             "ConcentrateSpeed FLOAT," +
+                             "ConcentrateTimes FLOAT," +
+                             "CollectVolume FLOAT," +
+                             "CollectSpeed FLOAT," +
+                             "CollectTimes FLOAT" +
+                             ")";
+                db.Database.ExecuteSqlCommand(sql);
             }
         }
 

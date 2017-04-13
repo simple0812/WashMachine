@@ -4,6 +4,8 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
+using WashMachine.Libs;
 using WashMachine.Models;
 
 namespace WashMachine.Services
@@ -12,16 +14,18 @@ namespace WashMachine.Services
     {
         public static readonly WashFlowService Instance = new WashFlowService();
 
+       
         public bool Save(WashFlow washFlow, out string err)
         {
             err = "";
-            using (var conn = DbHelper.GetDbConnection())
+            using (var db = new MyDbContext())
             {
-                var p = conn.Table<WashFlow>().Count();
+                var p = db.WashFlows.Count();
                
                 if (washFlow.Id > 0)
                 {
-                    conn.InsertOrReplace(washFlow);
+                    db.WashFlows.Update(washFlow);
+                    db.SaveChanges();
                     return true;
                 }
 
@@ -31,30 +35,32 @@ namespace WashMachine.Services
                     return false;
                 }
 
-                if (conn.Table<WashFlow>().Count(x => x.Name == washFlow.Name) > 0)
+                if (db.WashFlows.Count(x => x.Name == washFlow.Name) > 0)
                 {
                     err = "名称已存在，请换个名称";
                     return false;
                 }
 
-                conn.Insert(washFlow);
+                db.WashFlows.Add(washFlow);
+                db.SaveChanges();
                 return true;
             }
         }
 
         public bool Remove(WashFlow flow)
         {
-            using (var conn = DbHelper.GetDbConnection())
+            using (var db = new MyDbContext())
             {
-                return conn.Delete<WashFlow>(flow.Id) > 0;
+                db.WashFlows.Remove(flow);
+                return true;
             }
         }
 
         public IList<WashFlow> GetList()
         {
-            using (var conn = DbHelper.GetDbConnection())
+            using (var db = new MyDbContext())
             {
-                return conn.Table<WashFlow>().ToList();
+                return db.WashFlows.ToList();
             }
         } 
     }
