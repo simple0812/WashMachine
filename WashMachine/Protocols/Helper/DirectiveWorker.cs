@@ -30,9 +30,9 @@ namespace WashMachine.Protocols.Helper
 
         private DirectiveWorker()
         {
-//            serialPort = SerialCreater.Instance.Create();
-            serialPort = SerialCreater.Instance.Create("QM-USB-COM");
+            
             Init();
+           
         }
 
         public void Init()
@@ -42,8 +42,6 @@ namespace WashMachine.Protocols.Helper
             waitForFeedbackDirectives = new ConcurrentDictionary<int, WaitForFeedBack>();
 
             cancelTokenSource = new CancellationTokenSource();
-
-            serialPort.ReceiveHandler += SpHelper_ReceiveHandler;
 
             Task.Run(async () =>
             {
@@ -189,10 +187,23 @@ namespace WashMachine.Protocols.Helper
                 waitForFeedbackDirectives.TryAdd(item.DirectiveId, new WaitForFeedBack(DateTime.Now, item, reSendTimes));
 
                 var directiveData = protocolProvider.GenerateDirectiveBuffer(item);
+                if (serialPort == null)
+                {
+                    serialPort = SerialCreater.Instance.Create(SerialEnum.LowerComputer);
+                    if (serialPort == null)
+                    {
+                        Debug.WriteLine("LowerComputer is null");
+                        return;
+                    }
+                    serialPort.ReceiveHandler += SpHelper_ReceiveHandler;
+                }
 
-                await serialPort.Open();
-                if (waitForFeedbackDirectives.ContainsKey(item.DirectiveId))
-                    await serialPort.Send(directiveData, cancelTokenSource.Token);
+                if (serialPort != null)
+                {
+                    await serialPort.Open();
+                    if (waitForFeedbackDirectives.ContainsKey(item.DirectiveId))
+                        await serialPort.Send(directiveData, cancelTokenSource.Token);
+                }
             }
             catch (CustomException)
             {

@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using WashMachine.Enums;
 using WashMachine.Protocols.SimDirectives;
 
 namespace WashMachine.Protocols.Helper
@@ -25,6 +26,16 @@ namespace WashMachine.Protocols.Helper
 
             Task.Run(async () =>
             {
+                serialPort = SerialCreater.Instance.Create(SerialEnum.Sim);
+                //            serialPort = SerialCreater.Instance.Create("Silicon Labs CP210x USB to UART Bridge (COM4)");
+
+                if (serialPort == null)
+                {
+                    Debug.WriteLine("sim is null");
+                    return;
+                }
+                serialPort.ReceiveHandler += SerialPort_ReceiveHandler;
+
                 while (true)
                 {
                     CompositeDirective temp = null;
@@ -69,8 +80,7 @@ namespace WashMachine.Protocols.Helper
                 }
             });
 
-            serialPort = SerialCreater.Instance.Create("Silicon Labs CP210x USB to UART Bridge (COM4)");
-            serialPort.ReceiveHandler += SerialPort_ReceiveHandler;
+
         }
 
         private void SerialPort_ReceiveHandler(byte[] obj)
@@ -113,8 +123,11 @@ namespace WashMachine.Protocols.Helper
         {
             var x = Encoding.UTF8.GetBytes(msg);
             var p = new CancellationTokenSource();
-            await serialPort.Open();
-            await serialPort.Send(x.Concat(new byte[] { 0x0D, 0x0A }).ToArray(), p.Token);
+            if (serialPort != null)
+            {
+                await serialPort.Open();
+                await serialPort.Send(x.Concat(new byte[] { 0x0D, 0x0A }).ToArray(), p.Token);
+            }
         }
 
         //发送at指令

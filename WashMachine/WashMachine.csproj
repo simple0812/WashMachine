@@ -124,6 +124,7 @@
     <Compile Include="Enums\ProcessModeEnum.cs" />
     <Compile Include="Enums\RockEnum.cs" />
     <Compile Include="Enums\SendModeEnum.cs" />
+    <Compile Include="Enums\SerialEnum.cs" />
     <Compile Include="Enums\SysStatusEnum.cs" />
     <Compile Include="Enums\TargeDeviceTypeEnum.cs" />
     <Compile Include="FullFlow.xaml.cs">

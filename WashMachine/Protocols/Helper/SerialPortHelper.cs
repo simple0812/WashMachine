@@ -23,7 +23,6 @@ namespace WashMachine.Protocols.Helper
         public SerialPortStatus Status { get; set; }
         SerialDevice serialPort = null;
         CancellationTokenSource readCancellationTokenSource;
-        private string PortName;
 
         public event Action<byte[]> ReceiveHandler;
 
@@ -37,40 +36,18 @@ namespace WashMachine.Protocols.Helper
 
         private DataReader dataReader;
 
-        public SerialPortHelper(string portName = "")
+        public SerialPortHelper(SerialDevice device)
         {
-            PortName = portName;
+            serialPort = device;
             Status = SerialPortStatus.Initialled;
         }
 
-        public async Task Open()
+        public async Task<SerialEnum> Open( )
         {
             if (Status == SerialPortStatus.Initialled)
             {
                 try
                 {
-                    string aqs = SerialDevice.GetDeviceSelector();
-                    var dis = await DeviceInformation.FindAllAsync(aqs);
-                    foreach (var each in dis)
-                    {
-                        Debug.WriteLine("portname" + each.Name);
-                    }
-
-                    var p = PortName == "" ? dis.FirstOrDefault() : dis.FirstOrDefault(item => item.Name == PortName);
-                    if (p == null)
-                    {
-                        Debug.WriteLine(PortName + " Port is null");
-                        return;
-                    }
-
-                    serialPort = await SerialDevice.FromIdAsync(p.Id);
-
-                    if (serialPort == null)
-                    {
-                        Debug.WriteLine("Serial Port is null");
-                        return;
-                    }
-
                     serialPort.WriteTimeout = TimeSpan.FromMilliseconds(WRITE_TIMEOUT);
                     serialPort.ReadTimeout = TimeSpan.FromMilliseconds(READ_TIMEOUT);
                     serialPort.BaudRate = BAUD_RATE;
@@ -80,16 +57,74 @@ namespace WashMachine.Protocols.Helper
                     serialPort.Handshake = SERIAL_HANDSHAKE;
 
                     readCancellationTokenSource = new CancellationTokenSource();
+                    var ping = await Ping(new byte[] { 0x01, 0x04, 0x00, 0x00, 0x00, 0x18, 0xf0 });
+                    Debug.WriteLine("PC ping" + ping);
+                    //改为
+                    if (!string.IsNullOrEmpty(ping) && ping !="ff")
+                    {
+                        listen(1024);
+                        Status = SerialPortStatus.Opened;
+                        return SerialEnum.LowerComputer;
+                    }
 
-                    listen(1024);
-                    Status = SerialPortStatus.Opened;
-                    Debug.WriteLine("Serial Port Opened");
+                    ping = await Ping(Encoding.UTF8.GetBytes("AT+CCID").Concat(new byte[] { 0x0D, 0x0A }).ToArray());
+                    Debug.WriteLine("SIM ping" + ping);
+                    if (!string.IsNullOrEmpty(ping))
+                    {
+                        listen(1024);
+                        Status = SerialPortStatus.Opened;
+                        return SerialEnum.Sim;
+                    }
+                    serialPort.Dispose();
+                    Status = SerialPortStatus.Initialled;
+                    return SerialEnum.Unknown;
                 }
                 catch (Exception ex)
                 {
                     throw new CustomException(ex.Message + "open", this.GetType().FullName, ExceptionPriority.Importance);
                 }
+               
             }
+
+            return SerialEnum.Unknown;
+        }
+
+        private async Task<string> Ping(byte[] buffer)
+        {
+            var dataWriter = new DataWriter(serialPort.OutputStream);
+            var reader = new DataReader(serialPort.InputStream);
+            reader.InputStreamOptions = InputStreamOptions.Partial;
+            var source = new CancellationTokenSource(3000);
+            try
+            {
+                dataWriter.WriteBytes(buffer);
+                await dataWriter.StoreAsync().AsTask(source.Token); ;
+                var bytesRead =
+                    await reader.LoadAsync(1024).AsTask(source.Token);
+                var xdata = new byte[bytesRead];
+                reader.ReadBytes(xdata);
+
+                return Common.BytesToString(xdata);
+
+            }
+            catch (Exception)
+            {
+                Debug.WriteLine("XXX");
+//                Status = SerialPortStatus.Initialled;
+//                serialPort = null;
+            }
+            finally
+            {
+                dataWriter.DetachBuffer();
+                dataWriter.DetachStream();
+                dataWriter.Dispose();
+
+                reader.DetachBuffer();
+                reader.DetachStream();
+                reader.Dispose();
+            }
+
+            return "";
         }
 
         private async void listen(uint bufferLength)
