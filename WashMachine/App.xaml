@@ -9,6 +9,7 @@
         <ResourceDictionary>
             <FontFamily x:Key="FontAwesomeFontFamily">/Styles/FontAwesome.otf#FontAwesome</FontFamily>
             <converters:ObjectToBoolConverter x:Key="ObjectToBoolConverter"></converters:ObjectToBoolConverter>
+            <converters:DirectToBoolConverter x:Key="DirectToBoolConverter"></converters:DirectToBoolConverter>
         </ResourceDictionary>
     </Application.Resources>
 </Application>

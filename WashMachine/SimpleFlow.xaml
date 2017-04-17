@@ -44,8 +44,8 @@
                 <TextBox  Text="{Binding ConcentrateVolume, Mode=OneTime}" x:Name="txtConVolume" Header="浓缩留存体积(ml)" Width="170"></TextBox>
                 <TextBox  Text="{Binding ConcentrateSpeed, Mode=OneTime}" x:Name="txtConSpeed" Header="浓缩速度(ml/min)" Width="170"></TextBox>
                 <TextBox  Text="{Binding ConcentrateTimes, Mode=OneTime}" x:Name="txtConTimes" Header="浓缩循环次数" Width="170"></TextBox>
-                <ToggleSwitch Header="泵1反转" x:Name="tsPump1"></ToggleSwitch>
-                <ToggleSwitch Header="泵2反转" x:Name="tsPump2"></ToggleSwitch>
+                <ToggleSwitch Header="泵1反转" IsOn="{Binding WashPumpDirection, Mode=OneTime, Converter={StaticResource DirectToBoolConverter}}" x:Name="tsPump1"></ToggleSwitch>
+                <ToggleSwitch Header="泵2反转" IsOn="{Binding ConcentratePumpDirection, Mode=OneTime, Converter={StaticResource DirectToBoolConverter}}" x:Name="tsPump2"></ToggleSwitch>
                 <controls:QrCodeInfo x:Name="qrCtrl"></controls:QrCodeInfo>
             </StackPanel>
             <StackPanel Grid.Column="1">

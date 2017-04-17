@@ -112,6 +112,7 @@
     <Compile Include="Controls\TopPopup.xaml.cs">
       <DependentUpon>TopPopup.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Converters\DirectToBoolConverter.cs" />
     <Compile Include="Converters\ObjectToBoolConverter.cs" />
     <Compile Include="Devices\DeviceBase.cs" />
     <Compile Include="Devices\PumpDevice.cs" />

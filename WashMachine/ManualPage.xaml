@@ -20,7 +20,7 @@
 
             <TextBox x:Name="txtRate" Text="10" Header="转速" Width="150" HorizontalAlignment="Left">
             </TextBox>
-            <TextBox Height="80" VerticalAlignment="Bottom" VerticalContentAlignment="Bottom"  Text="10" x:Name="txtAngel" Width="150" Header="流量">
+            <TextBox Height="80" VerticalAlignment="Center" VerticalContentAlignment="Center"  Text="10" x:Name="txtAngel" Width="150" Header="流量">
             </TextBox>
         </StackPanel>
         <StackPanel Orientation="Horizontal">

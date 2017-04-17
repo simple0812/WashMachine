@@ -48,9 +48,9 @@
                 <TextBox  Text="{Binding CollectVolume, Mode=OneTime}" x:Name="txtColVolume" Header="收集量(ml)" Width="170"></TextBox>
                 <TextBox  Text="{Binding CollectSpeed, Mode=OneTime}" x:Name="txtColSpeed" Header="收集速度(ml/min)" Width="170"></TextBox>
                 <TextBox  Text="{Binding CollectTimes, Mode=OneTime}" x:Name="txtColTimes" Header="收集循环次数" Width="170"></TextBox>
-                <ToggleSwitch Header="泵1反转" x:Name="tsPump1"></ToggleSwitch>
-                <ToggleSwitch Header="泵2反转" x:Name="tsPump2"></ToggleSwitch>
-                <ToggleSwitch Header="泵3反转" x:Name="tsPump3"></ToggleSwitch>
+                    <ToggleSwitch Header="泵1反转" IsOn="{Binding WashPumpDirection, Mode=OneTime, Converter={StaticResource DirectToBoolConverter}}" x:Name="tsPump1"></ToggleSwitch>
+                    <ToggleSwitch Header="泵2反转" IsOn="{Binding ConcentratePumpDirection, Mode=OneTime, Converter={StaticResource DirectToBoolConverter}}" x:Name="tsPump2"></ToggleSwitch>
+                    <ToggleSwitch Header="泵3反转" IsOn="{Binding CollectionPumpDirection, Mode=OneTime, Converter={StaticResource DirectToBoolConverter}}" x:Name="tsPump3"></ToggleSwitch>
                  <controls:QrCodeInfo x:Name="qrCtrl"></controls:QrCodeInfo>
             </StackPanel>
             </ScrollViewer>
