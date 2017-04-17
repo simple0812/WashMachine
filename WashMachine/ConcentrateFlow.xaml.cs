@@ -49,6 +49,7 @@ namespace WashMachine
 
             int conVolume = int.TryParse(txtConVolume.Text, out conVolume) ? conVolume : -1;
             int conSpeed = int.TryParse(txtConSpeed.Text, out conSpeed) ? conSpeed : -1;
+            var dir = tsPump2.IsOn ? DirectionEnum.Out : DirectionEnum.In;
 
             if (conVolume <= 0)
             {
@@ -68,7 +69,7 @@ namespace WashMachine
             App.Status = SysStatusEnum.Starting;
             btnStart.IsEnabled = false;
 
-            await Logic.Instance.pump1.SetParams(conSpeed, conVolume).StartAsync();
+            await Logic.Instance.pump1.SetParams(conSpeed, conVolume, dir).StartAsync();
 
             App.Status = SysStatusEnum.Completed;
             btnStart.IsEnabled = true;

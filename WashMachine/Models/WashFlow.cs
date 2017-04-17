@@ -16,13 +16,16 @@ namespace WashMachine.Models
 
         public double WashVolume { get; set; }
         public double WashSpeed { get; set; }
+        public DirectionEnum WashPumpDirection { get; set; }
 
         public double ConcentrateVolume { get; set; }
         public double ConcentrateSpeed { get; set; }
+        public DirectionEnum ConcentratePumpDirection { get; set; }
         public int ConcentrateTimes { get; set; }
 
         public double CollectVolume { get; set; }
         public double CollectSpeed { get; set; }
+        public DirectionEnum CollectionPumpDirection { get; set; }
         public int CollectTimes { get; set; }
     }
 }

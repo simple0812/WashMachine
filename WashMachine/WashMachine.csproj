@@ -145,6 +145,9 @@
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ManualPage.xaml.cs">
+      <DependentUpon>ManualPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Models\CnetScan.cs" />
     <Compile Include="Models\CommunicationEventArgs.cs" />
     <Compile Include="Models\CustomException.cs" />
@@ -250,6 +253,10 @@
     <Page Include="MainPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="ManualPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="SimpleFlow.xaml">
       <SubType>Designer</SubType>

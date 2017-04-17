@@ -68,8 +68,8 @@ namespace WashMachine
 
             App.Status = SysStatusEnum.Starting;
             btnStart.IsEnabled = false;
-            Logic.Instance.pump1.SetParams(washFlow.WashSpeed, washFlow.WashVolume);
-            Logic.Instance.pump2.SetParams(washFlow.ConcentrateSpeed, washFlow.ConcentrateVolume);
+            Logic.Instance.pump1.SetParams(washFlow.WashSpeed, washFlow.WashVolume, washFlow.WashPumpDirection);
+            Logic.Instance.pump2.SetParams(washFlow.ConcentrateSpeed, washFlow.ConcentrateVolume, washFlow.ConcentratePumpDirection);
 
             for (var i = 0; i < washFlow.ConcentrateTimes; i++)
             {
@@ -188,6 +188,8 @@ namespace WashMachine
             washFlow.ConcentrateVolume = conVolume;
             washFlow.ConcentrateTimes = conTimes;
             washFlow.FlowType = FlowEnum.Simple;
+            washFlow.WashPumpDirection = tsPump1.IsOn ? DirectionEnum.Out : DirectionEnum.In;
+            washFlow.ConcentratePumpDirection = tsPump2.IsOn ? DirectionEnum.Out : DirectionEnum.In;
 
             var ctx = this.DataContext as WashFlow;
 

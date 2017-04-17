@@ -36,7 +36,9 @@
                 <ColumnDefinition Width="*"></ColumnDefinition>
                 <ColumnDefinition Width="3.5*"></ColumnDefinition>
             </Grid.ColumnDefinitions>
+            <ScrollViewer>
             <StackPanel x:Name="spEdit" HorizontalAlignment="Left" Padding="20" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+                
                 <TextBox  Text="{Binding Name, Mode=OneTime}" x:Name="txtName" Header="名称" Width="170"></TextBox>
                 <TextBox  Text="{Binding WashVolume, Mode=OneTime}" x:Name="txtWashVolume" Header="加液量(ml)" Width="170"></TextBox>
                 <TextBox  Text="{Binding WashSpeed, Mode=OneTime}" x:Name="txtWashSpeed" Header="加液速度(ml/min)" Width="170"></TextBox>
@@ -46,8 +48,12 @@
                 <TextBox  Text="{Binding CollectVolume, Mode=OneTime}" x:Name="txtColVolume" Header="收集量(ml)" Width="170"></TextBox>
                 <TextBox  Text="{Binding CollectSpeed, Mode=OneTime}" x:Name="txtColSpeed" Header="收集速度(ml/min)" Width="170"></TextBox>
                 <TextBox  Text="{Binding CollectTimes, Mode=OneTime}" x:Name="txtColTimes" Header="收集循环次数" Width="170"></TextBox>
-                <controls:QrCodeInfo x:Name="qrCtrl"></controls:QrCodeInfo>
+                <ToggleSwitch Header="泵1反转" x:Name="tsPump1"></ToggleSwitch>
+                <ToggleSwitch Header="泵2反转" x:Name="tsPump2"></ToggleSwitch>
+                <ToggleSwitch Header="泵3反转" x:Name="tsPump3"></ToggleSwitch>
+                 <controls:QrCodeInfo x:Name="qrCtrl"></controls:QrCodeInfo>
             </StackPanel>
+            </ScrollViewer>
             <StackPanel Grid.Column="1">
                 <TextBlock x:Name="txtRet"></TextBlock>
                 <TextBlock x:Name="txt" Text=""></TextBlock>

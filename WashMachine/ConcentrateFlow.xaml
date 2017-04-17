@@ -38,8 +38,10 @@
                 <ColumnDefinition Width="3.5*"></ColumnDefinition>
             </Grid.ColumnDefinitions>
             <StackPanel  x:Name="spEdit" HorizontalAlignment="Left" Padding="20" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-                <TextBox  Text="10" x:Name="txtConVolume" Header="浓缩体积(ml)" Width="170"></TextBox>
+                
+                <TextBox  Text="10" x:Name="txtConVolume" Header="浓缩留存体积(ml)" Width="170"></TextBox>
                 <TextBox  Text="20" x:Name="txtConSpeed" Header="浓缩速度(ml/min)" Width="170"></TextBox>
+                <ToggleSwitch Header="泵反转" x:Name="tsPump2"></ToggleSwitch>
                 <controls:QrCodeInfo x:Name="qrCtrl"></controls:QrCodeInfo>
             </StackPanel>
             <StackPanel Grid.Column="1">

@@ -129,11 +129,14 @@ namespace WashMachine
                              "Name varchar(50)," +
                              "WashVolume FLOAT," +
                              "WashSpeed FLOAT," +
+                             "WashPumpDirection INTEGER," +
                              "ConcentrateVolume FLOAT," +
                              "ConcentrateSpeed FLOAT," +
+                             "ConcentratePumpDirection INTEGER," +
                              "ConcentrateTimes FLOAT," +
                              "CollectVolume FLOAT," +
                              "CollectSpeed FLOAT," +
+                             "CollectionPumpDirection INTEGER," +
                              "CollectTimes FLOAT" +
                              ")";
                 db.Database.ExecuteSqlCommand(sql);

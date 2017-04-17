@@ -136,6 +136,12 @@ namespace WashMachine
                 _preSelectNavigation = mainNavigationList.SelectedIndex;
                 mainFrame.Navigate(typeof(History));
             }
+            else if (tapped_item?.Tag != null && tapped_item.Tag.ToString().Equals("5")) //流程列表
+            {
+                mainSplitView.IsPaneOpen = false;
+                _preSelectNavigation = mainNavigationList.SelectedIndex;
+                mainFrame.Navigate(typeof(ManualPage));
+            }
         }
 
         public void ShowNavigationBar(bool show)
@@ -167,6 +173,10 @@ namespace WashMachine
             else if (type == typeof(History))
             {
                 mainNavigationList.SelectedIndex = 4;
+            }
+            else if (type == typeof(ManualPage))
+            {
+                mainNavigationList.SelectedIndex = 5;
             }
         }
     }

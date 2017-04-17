@@ -71,9 +71,9 @@ namespace WashMachine
 
             App.Status = SysStatusEnum.Starting;
             btnStart.IsEnabled = false;
-            Logic.Instance.pump1.SetParams(washFlow.WashSpeed, washFlow.WashVolume);
-            Logic.Instance.pump2.SetParams(washFlow.ConcentrateSpeed, washFlow.ConcentrateVolume);
-            Logic.Instance.pump3.SetParams(washFlow.CollectSpeed, 0);
+            Logic.Instance.pump1.SetParams(washFlow.WashSpeed, washFlow.WashVolume, washFlow.WashPumpDirection);
+            Logic.Instance.pump2.SetParams(washFlow.ConcentrateSpeed, washFlow.ConcentrateVolume, washFlow.ConcentratePumpDirection);
+            Logic.Instance.pump3.SetParams(washFlow.CollectSpeed, 0, washFlow.CollectionPumpDirection);
 
             for (var i = 0; i < washFlow.ConcentrateTimes; i++)
             {
@@ -91,11 +91,11 @@ namespace WashMachine
                 for (var i = 0; i < washFlow.CollectTimes; i++)
                 {
                     txtRet.Text = $"第{i + 1}次收集细胞，加液开始";
-                    await Logic.Instance.pump1.SetParams(washFlow.WashSpeed, per + 10).StartAsync();
+                    await Logic.Instance.pump1.SetParams(washFlow.WashSpeed, per + 10, washFlow.WashPumpDirection).StartAsync();
                     txtRet.Text = $"第{i + 1}次收集细胞，浓缩开始";
-                    await Logic.Instance.pump2.SetParams(washFlow.ConcentrateSpeed, per).StartAsync();
+                    await Logic.Instance.pump2.SetParams(washFlow.ConcentrateSpeed, per, washFlow.ConcentratePumpDirection).StartAsync();
                     txtRet.Text = $"第{i + 1}次收集细胞，收集开始";
-                    await Logic.Instance.pump3.SetParams(washFlow.CollectSpeed, 0).StartAsync();
+                    await Logic.Instance.pump3.SetParams(washFlow.CollectSpeed, 0, washFlow.CollectionPumpDirection).StartAsync();
                 }
             }
            
@@ -238,6 +238,9 @@ namespace WashMachine
             washFlow.CollectSpeed = colSpeed;
             washFlow.CollectVolume = colVolume;
             washFlow.FlowType = FlowEnum.Full;
+            washFlow.WashPumpDirection = tsPump1.IsOn ? DirectionEnum.Out : DirectionEnum.In;
+            washFlow.ConcentratePumpDirection = tsPump2.IsOn ? DirectionEnum.Out : DirectionEnum.In;
+            washFlow.CollectionPumpDirection = tsPump3.IsOn ? DirectionEnum.Out : DirectionEnum.In;
 
             var ctx = this.DataContext as WashFlow;
 

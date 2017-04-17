@@ -21,10 +21,11 @@ namespace WashMachine.Devices
             Direction = direction;
         }
 
-        public PumpDevice SetParams(double flowRate, double volume)
+        public PumpDevice SetParams(double flowRate, double volume, DirectionEnum direction )
         {
             FlowRate = flowRate;
             Volume = volume;
+            Direction = direction;
 
             return this;
         }
