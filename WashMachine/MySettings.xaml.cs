@@ -66,7 +66,7 @@ namespace WashMachine
             strA.AddRange(WashRecordService.Instance.GetList().Select(each => $"{each.Name},{each.WashVolume},{each.WashSpeed}," +
                                                        $"{each.ConcentrateVolume},{each.ConcentrateSpeed},{each.ConcentrateTimes}," +
                                                        $"{each.CollectVolume},{each.CollectSpeed},{each.CollectTimes}," +
-                                                       $"{each.StartTime.ToString("yyyy-MM-dd HH:mm:ss")},{each.EndTime.ToString("yyyy-MM-dd HH:mm:ss")}"));
+                                                       $"{each.StartTime.ToString("yyyy年MM月dd日HH:mm:ss")},{each.EndTime.ToString("yyyy年MM月dd日HH:mm:ss")}"));
 
             await FileIO.WriteLinesAsync(file, strA, UnicodeEncoding.Utf8);
             new TopPopup().Show("下载完成,请在下载目录中WashMachine文件夹下查找");
