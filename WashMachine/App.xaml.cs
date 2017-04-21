@@ -139,7 +139,28 @@ namespace WashMachine
                              "CollectionPumpDirection INTEGER," +
                              "CollectTimes FLOAT" +
                              ")";
+
+                string sqlx = "CREATE TABLE IF NOT EXISTS WashRecord(" +
+                                 "Id INTEGER PRIMARY KEY autoincrement," +
+                                 "FlowType int," +
+                                 "Name varchar(50)," +
+                                 "WashVolume FLOAT," +
+                                 "WashSpeed FLOAT," +
+                                 "WashPumpDirection INTEGER," +
+                                 "ConcentrateVolume FLOAT," +
+                                 "ConcentrateSpeed FLOAT," +
+                                 "ConcentratePumpDirection INTEGER," +
+                                 "ConcentrateTimes FLOAT," +
+                                 "CollectVolume FLOAT," +
+                                 "CollectSpeed FLOAT," +
+                                 "CollectionPumpDirection INTEGER," +
+                                 "CollectTimes FLOAT," +
+                                 "StartTime DATE," +
+                                 "EndTime DATE" +
+                             ")";
+
                 db.Database.ExecuteSqlCommand(sql);
+                db.Database.ExecuteSqlCommand(sqlx);
             }
         }
 

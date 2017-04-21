@@ -11,6 +11,7 @@ namespace WashMachine.Libs
     public class MyDbContext : DbContext
     {
         public DbSet<WashFlow> WashFlows { get; set; }
+        public DbSet<WashRecord> WashRecords { get; set; }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlite("Filename=wash.db");

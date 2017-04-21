@@ -131,8 +131,8 @@
     <Compile Include="FullFlow.xaml.cs">
       <DependentUpon>FullFlow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="History.xaml.cs">
-      <DependentUpon>History.xaml</DependentUpon>
+    <Compile Include="MySettings.xaml.cs">
+      <DependentUpon>MySettings.xaml</DependentUpon>
     </Compile>
     <Compile Include="Libs\AsyncAutoResetEvent.cs" />
     <Compile Include="Libs\AsyncLock.cs" />
@@ -156,6 +156,7 @@
     <Compile Include="Models\DirectiveResult.cs" />
     <Compile Include="Models\JsonResult.cs" />
     <Compile Include="Models\WashFlow.cs" />
+    <Compile Include="Models\WashRecord.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Protocols\Directives\BaseDirective.cs" />
     <Compile Include="Protocols\Directives\CloseDirective.cs" />
@@ -199,6 +200,7 @@
     <Compile Include="Protocols\V485_1\ThemometerFeedbackResolver.cs" />
     <Compile Include="Protocols\V485_1\V485_1.cs" />
     <Compile Include="Services\WashFlowService.cs" />
+    <Compile Include="Services\WashRecordService.cs" />
     <Compile Include="SimpleFlow.xaml.cs">
       <DependentUpon>SimpleFlow.xaml</DependentUpon>
     </Compile>
@@ -247,7 +249,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="History.xaml">
+    <Page Include="MySettings.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

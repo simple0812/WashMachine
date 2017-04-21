@@ -99,6 +99,7 @@ namespace WashMachine
                 }
             }
            
+
             App.Status = SysStatusEnum.Completed;
             btnStart.IsEnabled = true;
             Logic.Instance.End();

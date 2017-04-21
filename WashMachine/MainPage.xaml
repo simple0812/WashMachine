@@ -65,7 +65,7 @@
                                        FontFamily="Segoe MDL2 Assets"
                                        TextAlignment="Center"
                                        Padding="0,4,0,0"/>
-                            <TextBlock Text="配置列表" 
+                            <TextBlock Text="我的设置" 
                                        FontSize="18"
                                        FontFamily="微软雅黑"
                                        Margin="12,0,0,0"/>

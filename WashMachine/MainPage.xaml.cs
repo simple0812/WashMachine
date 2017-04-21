@@ -134,7 +134,7 @@ namespace WashMachine
             {
                 mainSplitView.IsPaneOpen = false;
                 _preSelectNavigation = mainNavigationList.SelectedIndex;
-                mainFrame.Navigate(typeof(History));
+                mainFrame.Navigate(typeof(MySettings));
             }
             else if (tapped_item?.Tag != null && tapped_item.Tag.ToString().Equals("5")) //流程列表
             {
@@ -170,7 +170,7 @@ namespace WashMachine
             {
                 mainNavigationList.SelectedIndex = 3;
             }
-            else if (type == typeof(History))
+            else if (type == typeof(MySettings))
             {
                 mainNavigationList.SelectedIndex = 4;
             }

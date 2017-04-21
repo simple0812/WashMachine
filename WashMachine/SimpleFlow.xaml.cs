@@ -62,6 +62,7 @@ namespace WashMachine
             var washFlow = GetWashFlow();
             if (washFlow == null) return;
             this.DataContext = washFlow;
+            var now = DateTime.Now;
 
             spEdit.IsHitTestVisible = false;
             spEdit.Background = new SolidColorBrush(Colors.Gray);
@@ -84,6 +85,7 @@ namespace WashMachine
             App.Status = SysStatusEnum.Completed;
             btnStart.IsEnabled = true;
             Logic.Instance.End();
+            WashRecordService.Instance.Save(washFlow, now, DateTime.Now);
             txtRet.Text = "操作完成";
         }
 
