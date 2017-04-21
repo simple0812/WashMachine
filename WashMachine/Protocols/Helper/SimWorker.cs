@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Concurrent;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
@@ -26,15 +25,7 @@ namespace WashMachine.Protocols.Helper
 
             Task.Run(async () =>
             {
-                serialPort = SerialCreater.Instance.Create(SerialEnum.Sim);
-                //            serialPort = SerialCreater.Instance.Create("Silicon Labs CP210x USB to UART Bridge (COM4)");
-
-                if (serialPort == null)
-                {
-                    Debug.WriteLine("sim is null");
-                    return;
-                }
-                serialPort.ReceiveHandler += SerialPort_ReceiveHandler;
+                
 
                 while (true)
                 {
@@ -123,6 +114,17 @@ namespace WashMachine.Protocols.Helper
         {
             var x = Encoding.UTF8.GetBytes(msg);
             var p = new CancellationTokenSource();
+            if (serialPort == null)
+            {
+                serialPort = await SerialCreater.Instance.Create(SerialEnum.Sim);
+                if (serialPort == null)
+                {
+                    Debug.WriteLine("sim is null");
+                    return;
+                }
+                serialPort.ReceiveHandler += SerialPort_ReceiveHandler;
+            }
+
             if (serialPort != null)
             {
                 await serialPort.Open();

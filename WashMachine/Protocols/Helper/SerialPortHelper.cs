@@ -1,20 +1,14 @@
 ﻿using System;
-using System.Collections.Concurrent;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Linq.Expressions;
-using System.Runtime.InteropServices.WindowsRuntime;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using Windows.Devices.Enumeration;
 using Windows.Devices.SerialCommunication;
-using Windows.Security.ExchangeActiveSyncProvisioning;
 using Windows.Storage.Streams;
-using WashMachine.Models;
 using WashMachine.Enums;
 using WashMachine.Libs;
+using WashMachine.Models;
 
 namespace WashMachine.Protocols.Helper
 {
@@ -75,8 +69,8 @@ namespace WashMachine.Protocols.Helper
                         Status = SerialPortStatus.Opened;
                         return SerialEnum.Sim;
                     }
-                    serialPort.Dispose();
                     Status = SerialPortStatus.Initialled;
+                    serialPort.Dispose();//该行会阻塞代码,导致不能正常返回
                     return SerialEnum.Unknown;
                 }
                 catch (Exception ex)
@@ -94,7 +88,7 @@ namespace WashMachine.Protocols.Helper
             var dataWriter = new DataWriter(serialPort.OutputStream);
             var reader = new DataReader(serialPort.InputStream);
             reader.InputStreamOptions = InputStreamOptions.Partial;
-            var source = new CancellationTokenSource(3000);
+            var source = new CancellationTokenSource(1000);
             try
             {
                 dataWriter.WriteBytes(buffer);
@@ -107,11 +101,9 @@ namespace WashMachine.Protocols.Helper
                 return Common.BytesToString(xdata);
 
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                Debug.WriteLine("XXX");
-//                Status = SerialPortStatus.Initialled;
-//                serialPort = null;
+                Debug.WriteLine("abc->" + e.Message);
             }
             finally
             {
@@ -148,7 +140,7 @@ namespace WashMachine.Protocols.Helper
                             var xdata = new byte[bytesRead];
                             dataReader.ReadBytes(xdata);
                             dataReader.DetachBuffer();
-                            LocalLog.Instance.Info("receive ->" + Common.BytesToString(xdata));
+                            LocalLog.Instance.Info("receive ->" + Common.BytesToString(xdata) + "<- end");
                             OnReceiveHandler(xdata);
                         }
 
@@ -187,7 +179,7 @@ namespace WashMachine.Protocols.Helper
             {
                 if (buffer.Length != 0)
                 {
-                    LocalLog.Instance.Info("send ->" + Common.BytesToString(buffer));
+                    LocalLog.Instance.Info("send ->" + Common.BytesToString(buffer) +"<- end");
                     dataWriter.WriteBytes(buffer);
 
                     var storeAsyncTask = dataWriter.StoreAsync().AsTask(token);

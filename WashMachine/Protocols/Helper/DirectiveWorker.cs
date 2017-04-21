@@ -1,15 +1,15 @@
-﻿using WashMachine.Protocols.Directives;
-using WashMachine.Protocols.Enums;
-using System;
+﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using WashMachine.Models;
 using WashMachine.Enums;
 using WashMachine.Libs;
+using WashMachine.Models;
+using WashMachine.Protocols.Directives;
+using WashMachine.Protocols.Enums;
 
 namespace WashMachine.Protocols.Helper
 {
@@ -152,6 +152,7 @@ namespace WashMachine.Protocols.Helper
                         }
                         catch (CustomException ce)
                         {
+                            Debug.WriteLine("..........");
                             OnErrorEvent(ce, item);
                         }
                         catch (TaskCanceledException)
@@ -163,6 +164,7 @@ namespace WashMachine.Protocols.Helper
                         }
                         catch (Exception ex)
                         {
+                            Debug.WriteLine(".........XXXXXXXXXXX.");
                             OnErrorEvent(new CustomException(ex.Message, this.GetType().FullName,
                                 ExceptionPriority.Unrecoverable), item);
                             return;
@@ -189,13 +191,16 @@ namespace WashMachine.Protocols.Helper
                 var directiveData = protocolProvider.GenerateDirectiveBuffer(item);
                 if (serialPort == null)
                 {
-                    serialPort = SerialCreater.Instance.Create(SerialEnum.LowerComputer);
-                    if (serialPort == null)
+                    serialPort = await SerialCreater.Instance.Create(SerialEnum.LowerComputer);
+                    if (serialPort != null)
+                    {
+                        serialPort.ReceiveHandler += SpHelper_ReceiveHandler;
+                    }
+                    else
                     {
                         Debug.WriteLine("LowerComputer is null");
-                        return;
+
                     }
-                    serialPort.ReceiveHandler += SpHelper_ReceiveHandler;
                 }
 
                 if (serialPort != null)
