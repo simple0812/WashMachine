@@ -6,6 +6,7 @@ using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading;
 using System.Threading.Tasks;
+using Windows.ApplicationModel;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.Storage;
@@ -35,6 +36,7 @@ namespace WashMachine
         public ConcentrateFlow()
         {
             this.InitializeComponent();
+           
         }
 
         private async void BtnStart_OnClick(object sender, RoutedEventArgs e)

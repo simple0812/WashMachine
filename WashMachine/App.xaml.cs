@@ -31,6 +31,14 @@ namespace WashMachine
     /// </summary>
     sealed partial class App : Application
     {
+#if DEBUG
+        public const string SERVER_ADDR = "211.152.35.57";
+        public const string SERVER_PORT = "6007";
+#endif
+#if !DEBUG
+        public const string SERVER_ADDR = "211.152.35.57";
+        public const string SERVER_PORT = "6007";
+#endif
 
         public static SysStatusEnum Status = SysStatusEnum.Unknown;
         public static readonly WashFlow WashFlow = new WashFlow()
@@ -43,7 +51,10 @@ namespace WashMachine
             ConcentrateVolume = 5,
             ConcentrateTimes = 3,
             WashSpeed = 20,
-            WashVolume = 20
+            WashVolume = 20,
+            ConcentratePumpDirection = DirectionEnum.In,
+            CollectionPumpDirection = DirectionEnum.In,
+            WashPumpDirection = DirectionEnum.In
         };
         /// <summary>
         /// 初始化单一实例应用程序对象。这是执行的创作代码的第一行，

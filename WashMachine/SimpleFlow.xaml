@@ -27,10 +27,7 @@
             <RowDefinition Height="*"></RowDefinition>
             <RowDefinition Height="Auto"></RowDefinition>
         </Grid.RowDefinitions>
-        <RelativePanel Grid.Row="0" Padding="10" Background="#335a9b">
-            <TextBlock Text="生动细胞清洗器"  Foreground="White" RelativePanel.AlignLeftWithPanel="True"></TextBlock>
-            <TextBlock Foreground="White" x:Name="txtCurrTime" RelativePanel.AlignRightWithPanel="True"></TextBlock>
-        </RelativePanel>
+        <controls:Header  Grid.Row="0" ></controls:Header>
 
         <Grid  Grid.Row="1">
             <Grid.ColumnDefinitions>

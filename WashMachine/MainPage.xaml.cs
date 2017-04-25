@@ -4,9 +4,11 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using Windows.ApplicationModel;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI.Core;
+using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -15,6 +17,7 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Imaging;
 using Windows.UI.Xaml.Navigation;
+using WashMachine.Controls;
 using WashMachine.Libs;
 
 //“空白页”项模板在 http://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409 上有介绍
@@ -34,6 +37,21 @@ namespace WashMachine
             this.InitializeComponent();
             mainNavigationList.SelectedIndex = 1;
             Logic.Instance.CommunicationHandler += Instance_CommunicationHandler;
+
+            this.Loaded += MainPage_Loaded;
+          
+
+        }
+
+        private async void MainPage_Loaded(object sender, RoutedEventArgs e)
+        {
+            var isCanUpdate = await AutoUpdate.CheckUpdate();
+
+            if (isCanUpdate)
+            {
+                var x = new UpdateDialog();
+                await x.ShowAsync();
+            }
         }
 
         private async void Instance_CommunicationHandler(object arg1, Models.CommunicationEventArgs arg2)

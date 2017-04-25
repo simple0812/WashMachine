@@ -102,6 +102,9 @@
     <Compile Include="ConcentrateFlow.xaml.cs">
       <DependentUpon>ConcentrateFlow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\Header.xaml.cs">
+      <DependentUpon>Header.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\QrCodeDialog.xaml.cs">
       <DependentUpon>QrCodeDialog.xaml</DependentUpon>
     </Compile>
@@ -111,6 +114,9 @@
     <Compile Include="Controls\SwipeableSplitView.cs" />
     <Compile Include="Controls\TopPopup.xaml.cs">
       <DependentUpon>TopPopup.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\UpdateDialog.xaml.cs">
+      <DependentUpon>UpdateDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Converters\DirectToBoolConverter.cs" />
     <Compile Include="Converters\ObjectToBoolConverter.cs" />
@@ -131,6 +137,7 @@
     <Compile Include="FullFlow.xaml.cs">
       <DependentUpon>FullFlow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Libs\AutoUpdate.cs" />
     <Compile Include="MySettings.xaml.cs">
       <DependentUpon>MySettings.xaml</DependentUpon>
     </Compile>
@@ -233,6 +240,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Controls\Header.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Controls\QrCodeDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -242,6 +253,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\TopPopup.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\UpdateDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

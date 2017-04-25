@@ -1,0 +1,16 @@
+﻿<UserControl
+    x:Class="WashMachine.Controls.Header"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:WashMachine.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    d:DesignHeight="300"
+    d:DesignWidth="400">
+
+    <RelativePanel Grid.Row="0" Padding="10" Background="#335a9b">
+        <TextBlock Text="生动细胞清洗器"  Foreground="White" RelativePanel.AlignLeftWithPanel="True"></TextBlock>
+        <TextBlock Foreground="White" FontSize="12"  x:Name="txtCurrTime" RelativePanel.AlignRightWithPanel="True"></TextBlock>
+    </RelativePanel>
+</UserControl>
