@@ -181,11 +181,12 @@ namespace WashMachine
                 return null;
             }
 
-            if (washSpeed <= 0)
+            if (washSpeed <= 0 || washSpeed > 50)
             {
-                new TopPopup().Show("加液速度必须大于0");
+                new TopPopup().Show("加液速度范围为0至50");
                 return null;
             }
+
 
             if (washVolume <= 0)
             {
@@ -198,9 +199,9 @@ namespace WashMachine
                 return null;
             }
 
-            if (conSpeed <= 0)
+            if (conSpeed <= 0 || conSpeed > 50)
             {
-                new TopPopup().Show("浓缩速度必须大于0");
+                new TopPopup().Show("浓缩速度范围为0至50");
                 return null;
             }
 
@@ -216,9 +217,9 @@ namespace WashMachine
                 return null;
             }
 
-            if (colSpeed <= 0)
+            if (colSpeed <= 0 || colSpeed > 50)
             {
-                new TopPopup().Show("收集速度必须大于0");
+                new TopPopup().Show("收集速度范围为0至50");
                 return null;
             }
 

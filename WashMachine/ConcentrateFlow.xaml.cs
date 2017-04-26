@@ -59,9 +59,9 @@ namespace WashMachine
                 return ;
             }
 
-            if (conSpeed <= 0)
+            if (conSpeed <= 0 || conSpeed > 50)
             {
-                new TopPopup().Show("浓缩速度必须大于0");
+                new TopPopup().Show("浓缩速度范围为0至50");
                 return ;
             }
 
@@ -71,7 +71,7 @@ namespace WashMachine
             App.Status = SysStatusEnum.Starting;
             btnStart.IsEnabled = false;
 
-            await Logic.Instance.pump1.SetParams(conSpeed, conVolume, dir).StartAsync();
+            await Logic.Instance.pump2.SetParams(conSpeed, conVolume, dir).StartAsync();
 
             App.Status = SysStatusEnum.Completed;
             btnStart.IsEnabled = true;

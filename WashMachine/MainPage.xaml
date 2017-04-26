@@ -27,7 +27,7 @@
                                        FontSize="20" 
                                        FontFamily="Segoe MDL2 Assets"
                                        Padding="0,4,0,0"/>
-                            <TextBlock Text="浓缩流程" 
+                            <TextBlock Text="浓缩" 
                                        FontSize="18"
                                        FontFamily="微软雅黑"
                                        Margin="12,0,0,0"/>
@@ -39,7 +39,7 @@
                                        FontSize="20" 
                                        FontFamily="Segoe MDL2 Assets"
                                        Padding="0,4,0,0"/>
-                            <TextBlock Text="简单流程" 
+                            <TextBlock Text="浓缩清洗" 
                                        FontSize="18"
                                        FontFamily="微软雅黑"
                                        Margin="12,0,0,0"/>
@@ -52,7 +52,7 @@
                                        FontFamily="Segoe MDL2 Assets"
                                        TextAlignment="Center"
                                        Padding="0,4,0,0"/>
-                            <TextBlock Text="完整流程" 
+                            <TextBlock Text="清洗收集" 
                                        FontSize="18"
                                        FontFamily="微软雅黑"
                                        Margin="12,0,0,0"/>
@@ -65,7 +65,7 @@
                                        FontFamily="Segoe MDL2 Assets"
                                        TextAlignment="Center"
                                        Padding="0,4,0,0"/>
-                            <TextBlock Text="我的设置" 
+                            <TextBlock Text="历史设置" 
                                        FontSize="18"
                                        FontFamily="微软雅黑"
                                        Margin="12,0,0,0"/>
