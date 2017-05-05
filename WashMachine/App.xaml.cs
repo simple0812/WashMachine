@@ -33,7 +33,7 @@ namespace WashMachine
     {
 #if DEBUG
         public const string SERVER_ADDR = "211.152.35.57";
-        public const string SERVER_PORT = "6007";
+        public const string SERVER_PORT = "8101";
 #endif
 #if !DEBUG
         public const string SERVER_ADDR = "211.152.35.57";
@@ -115,16 +115,16 @@ namespace WashMachine
                 Task.Run(async () =>
                 {
                     await SerialCreater.Instance.Build();
-                    SimWorker.Instance.Enqueue(new LocationCompositeDirective(x =>
-                    {
-                        var cnetScans = x.Result as CnetScan;
-                        if (cnetScans == null) return;
-                        var url =
-                            $"http://211.152.35.57:8103/api/sim/location?mcc={cnetScans.MCC}&mnc={cnetScans.MNC}&lac={cnetScans.Lac}&ci={cnetScans.Cellid}&deviceid={Common.GetUniqueId()}";
-                        SimWorker.Instance.Enqueue(new HttpCompositeDirective(url, p =>
-                        {
-                        }));
-                    }));
+//                    SimWorker.Instance.Enqueue(new LocationCompositeDirective(x =>
+//                    {
+//                        var cnetScans = x.Result as CnetScan;
+//                        if (cnetScans == null) return;
+//                        var url =
+//                            $"http://211.152.35.57:8103/api/sim/location?mcc={cnetScans.MCC}&mnc={cnetScans.MNC}&lac={cnetScans.Lac}&ci={cnetScans.Cellid}&deviceid={Common.GetUniqueId()}";
+//                        SimWorker.Instance.Enqueue(new HttpCompositeDirective(url, p =>
+//                        {
+//                        }));
+//                    }));
                 });
             }
         }

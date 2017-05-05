@@ -71,16 +71,16 @@ namespace WashMachine
 
             App.Status = SysStatusEnum.Starting;
             btnStart.IsEnabled = false;
-            Logic.Instance.pump1.SetParams(washFlow.WashSpeed, washFlow.WashVolume, washFlow.WashPumpDirection);
-            Logic.Instance.pump2.SetParams(washFlow.ConcentrateSpeed, washFlow.ConcentrateVolume, washFlow.ConcentratePumpDirection);
+            Logic.Instance.pump2.SetParams(washFlow.WashSpeed, washFlow.WashVolume, washFlow.WashPumpDirection);
+            Logic.Instance.pump1.SetParams(washFlow.ConcentrateSpeed, washFlow.ConcentrateVolume, washFlow.ConcentratePumpDirection);
             Logic.Instance.pump3.SetParams(washFlow.CollectSpeed, 0, washFlow.CollectionPumpDirection);
 
             for (var i = 0; i < washFlow.ConcentrateTimes; i++)
             {
                 txtRet.Text = $"第{i + 1}次加液开始...";
-                await Logic.Instance.pump1.StartAsync();
-                txtRet.Text = $"第{i + 1}次浓缩开始...";
                 await Logic.Instance.pump2.StartAsync();
+                txtRet.Text = $"第{i + 1}次浓缩开始...";
+                await Logic.Instance.pump1.StartAsync();
             }
 
             txtRet.Text = $"开始收集细胞..";
@@ -91,9 +91,9 @@ namespace WashMachine
                 for (var i = 0; i < washFlow.CollectTimes; i++)
                 {
                     txtRet.Text = $"第{i + 1}次收集细胞，加液开始";
-                    await Logic.Instance.pump1.SetParams(washFlow.WashSpeed, per + 10, washFlow.WashPumpDirection).StartAsync();
+                    await Logic.Instance.pump2.SetParams(washFlow.WashSpeed, per + 10, washFlow.WashPumpDirection).StartAsync();
                     txtRet.Text = $"第{i + 1}次收集细胞，浓缩开始";
-                    await Logic.Instance.pump2.SetParams(washFlow.ConcentrateSpeed, per, washFlow.ConcentratePumpDirection).StartAsync();
+                    await Logic.Instance.pump1.SetParams(washFlow.ConcentrateSpeed, per, washFlow.ConcentratePumpDirection).StartAsync();
                     txtRet.Text = $"第{i + 1}次收集细胞，收集开始";
                     await Logic.Instance.pump3.SetParams(washFlow.CollectSpeed, 0, washFlow.CollectionPumpDirection).StartAsync();
                 }

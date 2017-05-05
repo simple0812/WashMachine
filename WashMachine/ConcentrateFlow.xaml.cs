@@ -71,7 +71,7 @@ namespace WashMachine
             App.Status = SysStatusEnum.Starting;
             btnStart.IsEnabled = false;
 
-            await Logic.Instance.pump2.SetParams(conSpeed, conVolume, dir).StartAsync();
+            await Logic.Instance.pump1.SetParams(conSpeed, conVolume, dir).StartAsync();
 
             App.Status = SysStatusEnum.Completed;
             btnStart.IsEnabled = true;

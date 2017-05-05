@@ -69,17 +69,17 @@ namespace WashMachine
 
             App.Status = SysStatusEnum.Starting;
             btnStart.IsEnabled = false;
-            Logic.Instance.pump1.SetParams(washFlow.WashSpeed, washFlow.WashVolume, washFlow.WashPumpDirection);
-            Logic.Instance.pump2.SetParams(washFlow.ConcentrateSpeed, washFlow.ConcentrateVolume, washFlow.ConcentratePumpDirection);
+            Logic.Instance.pump2.SetParams(washFlow.WashSpeed, washFlow.WashVolume, washFlow.WashPumpDirection);
+            Logic.Instance.pump1.SetParams(washFlow.ConcentrateSpeed, washFlow.ConcentrateVolume, washFlow.ConcentratePumpDirection);
 
             for (var i = 0; i < washFlow.ConcentrateTimes; i++)
             {
                 txtRet.Text = $"第{i + 1}次加液开始...";
                 await Task.Delay(20);
-                await Logic.Instance.pump1.StartAsync();
+                await Logic.Instance.pump2.StartAsync();
                 txtRet.Text = $"第{i + 1}次浓缩开始...";
                 await Task.Delay(20);
-                await Logic.Instance.pump2.StartAsync();
+                await Logic.Instance.pump1.StartAsync();
             }
 
             App.Status = SysStatusEnum.Completed;
