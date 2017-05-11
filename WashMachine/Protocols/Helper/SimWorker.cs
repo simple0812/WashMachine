@@ -114,22 +114,39 @@ namespace WashMachine.Protocols.Helper
         {
             var x = Encoding.UTF8.GetBytes(msg);
             var p = new CancellationTokenSource();
+            // 第一次加载
             if (serialPort == null)
             {
-                serialPort = await SerialCreater.Instance.Create(SerialEnum.Sim);
-                if (serialPort == null)
-                {
-                    Debug.WriteLine("sim is null");
-                    return;
-                }
-                serialPort.ReceiveHandler += SerialPort_ReceiveHandler;
+                serialPort = await getSerialPort();
             }
 
             if (serialPort != null)
             {
-                await serialPort.Open();
-                await serialPort.Send(x.Concat(new byte[] { 0x0D, 0x0A }).ToArray(), p.Token);
+                // 运行过程中串口断开了
+                if (serialPort.serialPort == null)
+                {
+                    serialPort.ReceiveHandler -= SerialPort_ReceiveHandler;
+                    serialPort = await getSerialPort();
+                }
+
+                if (serialPort != null)
+                    await serialPort.Send(x.Concat(new byte[] { 0x0D, 0x0A }).ToArray(), p.Token);
             }
+        }
+
+        private async Task<SerialPortHelper> getSerialPort()
+        {
+            serialPort = await SerialCreater.Instance.Create(SerialEnum.Sim);
+            if (serialPort != null)
+            {
+                serialPort.ReceiveHandler += SerialPort_ReceiveHandler;
+            }
+            else
+            {
+                Debug.WriteLine("sim is null");
+
+            }
+            return serialPort;
         }
 
         //发送at指令

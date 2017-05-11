@@ -15,7 +15,7 @@ namespace WashMachine.Protocols.Helper
     public sealed class SerialPortHelper 
     {
         public SerialPortStatus Status { get; set; }
-        SerialDevice serialPort = null;
+        public SerialDevice serialPort = null;
         CancellationTokenSource readCancellationTokenSource;
 
         public event Action<byte[]> ReceiveHandler;
@@ -42,35 +42,39 @@ namespace WashMachine.Protocols.Helper
             {
                 try
                 {
-                    serialPort.WriteTimeout = TimeSpan.FromMilliseconds(WRITE_TIMEOUT);
-                    serialPort.ReadTimeout = TimeSpan.FromMilliseconds(READ_TIMEOUT);
-                    serialPort.BaudRate = BAUD_RATE;
-                    serialPort.Parity = SERIAL_PARITY;
-                    serialPort.StopBits = SERIAL_STOP_BIT_COUNT;
-                    serialPort.DataBits = DATA_BITS;
-                    serialPort.Handshake = SERIAL_HANDSHAKE;
-
-                    readCancellationTokenSource = new CancellationTokenSource();
-                    var ping = await Ping(new byte[] { 0x01, 0x04, 0x00, 0x00, 0x00, 0x18, 0xf0 });
-                    Debug.WriteLine("PC ping" + ping);
-                    //改为
-                    if (!string.IsNullOrEmpty(ping) && ping !="ff")
+                    if (serialPort != null)
                     {
-                        listen(1024);
-                        Status = SerialPortStatus.Opened;
-                        return SerialEnum.LowerComputer;
+                        serialPort.WriteTimeout = TimeSpan.FromMilliseconds(WRITE_TIMEOUT);
+                        serialPort.ReadTimeout = TimeSpan.FromMilliseconds(READ_TIMEOUT);
+                        serialPort.BaudRate = BAUD_RATE;
+                        serialPort.Parity = SERIAL_PARITY;
+                        serialPort.StopBits = SERIAL_STOP_BIT_COUNT;
+                        serialPort.DataBits = DATA_BITS;
+                        serialPort.Handshake = SERIAL_HANDSHAKE;
+
+                        readCancellationTokenSource = new CancellationTokenSource();
+                        var ping = await Ping(new byte[] { 0x01, 0x04, 0x00, 0x00, 0x00, 0x18, 0xf0 });
+                        LocalLog.Instance.Info("PC ping" + ping);
+                        //改为
+                        if (!string.IsNullOrEmpty(ping) && ping !="ff")
+                        {
+                            listen(1024);
+                            Status = SerialPortStatus.Opened;
+                            return SerialEnum.LowerComputer;
+                        }
+
+                        ping = await Ping(Encoding.UTF8.GetBytes("AT+CCID").Concat(new byte[] { 0x0D, 0x0A }).ToArray());
+                        LocalLog.Instance.Info("SIM ping" + ping);
+                        if (!string.IsNullOrEmpty(ping))
+                        {
+                            listen(1024);
+                            Status = SerialPortStatus.Opened;
+                            return SerialEnum.Sim;
+                        }
+                        Status = SerialPortStatus.Initialled;
+                        serialPort.Dispose();//该行会阻塞代码,导致不能正常返回
                     }
 
-                    ping = await Ping(Encoding.UTF8.GetBytes("AT+CCID").Concat(new byte[] { 0x0D, 0x0A }).ToArray());
-                    Debug.WriteLine("SIM ping" + ping);
-                    if (!string.IsNullOrEmpty(ping))
-                    {
-                        listen(1024);
-                        Status = SerialPortStatus.Opened;
-                        return SerialEnum.Sim;
-                    }
-                    Status = SerialPortStatus.Initialled;
-                    serialPort.Dispose();//该行会阻塞代码,导致不能正常返回
                     return SerialEnum.Unknown;
                 }
                 catch (Exception ex)
@@ -103,7 +107,7 @@ namespace WashMachine.Protocols.Helper
             }
             catch (Exception e)
             {
-                Debug.WriteLine("abc->" + e.Message);
+                LocalLog.Instance.Info("Ping err->" + e.Message);
             }
             finally
             {
@@ -150,7 +154,7 @@ namespace WashMachine.Protocols.Helper
             }
             catch (TaskCanceledException)
             {
-                Debug.WriteLine("serial listen cancel");
+                LocalLog.Instance.Info("serial listen cancel");
                 Status = SerialPortStatus.Initialled;
                 serialPort = null;
             }
@@ -221,11 +225,11 @@ namespace WashMachine.Protocols.Helper
                 serialPort?.Dispose();
                 serialPort = null;
                 Status = SerialPortStatus.None;
-                Debug.WriteLine("serialport dispose");
+                LocalLog.Instance.Info("serialport dispose");
             }
             catch (Exception e)
             {
-                Debug.WriteLine("serialport close error ->" + e.Message);
+                LocalLog.Instance.Info("serialport close error ->" + e.Message);
             }
         }
 

@@ -24,11 +24,17 @@ namespace WashMachine.Protocols.Helper
         {
             if (serialHelpers.ContainsKey(serial))
             {
-                return serialHelpers[serial];
+                var p = serialHelpers[serial];
+
+                if(p.serialPort != null)
+                    return serialHelpers[serial];
+
+                serialHelpers.Remove(serial);
             }
 
+            Debug.WriteLine("start build");
             await Build();
-            Debug.WriteLine("build finish");
+            Debug.WriteLine("finish build");
 
             if (serialHelpers.ContainsKey(serial))
             {
@@ -45,7 +51,7 @@ namespace WashMachine.Protocols.Helper
             foreach (var each in dis)
             {
                 Debug.WriteLine("portname:" + each.Name);
-//                if (each.Name.IndexOf("USB", StringComparison.Ordinal) == -1 && each.Name != "MINWINPC") continue;
+                if (each.Name.IndexOf("USB", StringComparison.Ordinal) == -1 && each.Name != "MINWINPC") continue;
 
                 var device = await SerialDevice.FromIdAsync(each.Id);
                 if (device == null)
@@ -55,7 +61,6 @@ namespace WashMachine.Protocols.Helper
                 }
 
                 var helper = new SerialPortHelper(device);
-//                var x = await helper.Open();
 
                 var cancellationToken = new CancellationTokenSource(3 * 1000).Token;
                 var cancellationCompletionSource = new TaskCompletionSource<SerialEnum>();

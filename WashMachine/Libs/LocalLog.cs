@@ -35,8 +35,8 @@ namespace WashMachine.Libs
         {
             try
             {
-                var folder = await ApplicationData.Current.LocalFolder.CreateFolderAsync("Logs", CreationCollisionOption.OpenIfExists);
-                var file = await folder.CreateFileAsync("log.txt", CreationCollisionOption.OpenIfExists);
+                var file = await KnownFolders.PicturesLibrary.CreateFileAsync("logs.txt", CreationCollisionOption.OpenIfExists);
+               
                 using (var stream = await file.OpenStreamForWriteAsync())
                 {
                     stream.Seek(0, SeekOrigin.End);

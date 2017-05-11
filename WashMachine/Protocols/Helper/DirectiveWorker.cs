@@ -189,30 +189,28 @@ namespace WashMachine.Protocols.Helper
                 waitForFeedbackDirectives.TryAdd(item.DirectiveId, new WaitForFeedBack(DateTime.Now, item, reSendTimes));
 
                 var directiveData = protocolProvider.GenerateDirectiveBuffer(item);
+                //第一次加载
                 if (serialPort == null)
                 {
-                    serialPort = await SerialCreater.Instance.Create(SerialEnum.LowerComputer);
-                    if (serialPort != null)
-                    {
-                        serialPort.ReceiveHandler += SpHelper_ReceiveHandler;
-                    }
-                    else
-                    {
-                        Debug.WriteLine("LowerComputer is null");
-
-                    }
+                    serialPort = await getSerialPort();
                 }
 
                 if (serialPort != null)
                 {
-                    await serialPort.Open();
-                    if (waitForFeedbackDirectives.ContainsKey(item.DirectiveId))
+                    // 运行过程中串口断开了
+                    if (serialPort.serialPort == null)
+                    {
+                        serialPort.ReceiveHandler -= SpHelper_ReceiveHandler;
+                        serialPort = await getSerialPort();
+                    }
+
+                    if (waitForFeedbackDirectives.ContainsKey(item.DirectiveId) && serialPort != null)
                         await serialPort.Send(directiveData, cancelTokenSource.Token);
                 }
             }
-            catch (CustomException)
+            catch (CustomException e)
             {
-                Debug.WriteLine("send error");
+                Debug.WriteLine("send error->" + e.Message );
             }
             catch (TaskCanceledException)
             {
@@ -223,6 +221,22 @@ namespace WashMachine.Protocols.Helper
                 OnErrorEvent(new CustomException(e.Message + "Send", this.GetType().FullName,
                     ExceptionPriority.Unrecoverable), item);
             }
+        }
+
+        private async Task<SerialPortHelper> getSerialPort()
+        {
+            serialPort = await SerialCreater.Instance.Create(SerialEnum.LowerComputer);
+            if (serialPort != null)
+            {
+                serialPort.ReceiveHandler += SpHelper_ReceiveHandler;
+            }
+            else
+            {
+                Debug.WriteLine("LowerComputer is null");
+
+            }
+
+            return serialPort;
         }
 
         private void HandleFeedback(DirectiveResult recvData, byte[] directiveBytes)
