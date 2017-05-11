@@ -14,6 +14,6 @@
 
     <StackPanel>
         <TextBlock FontSize="16" Text="有最新的版本，需要更新吗?" TextWrapping="Wrap"></TextBlock>
-        <TextBlock FontSize="16" Text="如需更新,请确保AppUpdate正在运行" TextWrapping="Wrap"></TextBlock>
+        <TextBlock FontSize="16"  Text="如需更新,请确保AppUpdate已安装" x:Name="txt" TextWrapping="Wrap"></TextBlock>
     </StackPanel>
 </ContentDialog>
