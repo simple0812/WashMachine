@@ -88,7 +88,7 @@
                     <Border Width="500" Height="200" BorderBrush="Orange" BorderThickness="2 2 2 0" Canvas.Left="280" Canvas.Top="101"></Border>
                     <Border Width="235" Height="100" BorderBrush="DarkBlue" BorderThickness="2 2 2 0" Canvas.Left="290" Canvas.Top="201"></Border>
 
-                    <Button Content="泵1" Tag="True" Template="{StaticResource ctButton}" Width="50" Height="50" Canvas.Top="175" Canvas.Left="120">
+                    <Button Content="泵2" Tag="True" Template="{StaticResource ctButton}" Width="50" Height="50" Canvas.Top="175" Canvas.Left="120">
                         <Button.Flyout>
                             <Flyout>
                                 <StackPanel>
@@ -100,7 +100,7 @@
                     </Button>
                     <ProgressRing Width="50" x:Name="pbAppend" Height="50" IsActive="False" Canvas.Top="175" Canvas.Left="120"></ProgressRing>
 
-                    <Button Content="泵2" Template="{StaticResource ctButton}" Width="50" Height="50" Canvas.Left="385" Canvas.Top="25">
+                    <Button Content="泵1" Template="{StaticResource ctButton}" Width="50" Height="50" Canvas.Left="385" Canvas.Top="25">
                         <Button.Flyout>
                             <Flyout>
                                 <StackPanel>
