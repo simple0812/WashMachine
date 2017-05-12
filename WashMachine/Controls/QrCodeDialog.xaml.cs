@@ -62,7 +62,7 @@ namespace WashMachine.Controls
             }
             //防止重复扫描
             var x = "http" + str.Split(new string[] { "http" }, StringSplitOptions.RemoveEmptyEntries)[0];
-            SimWorker.Instance.Enqueue(new HttpCompositeDirective(x + "&deviceid="+Common.GetUniqueId(), async ret =>
+            SimWorker.Instance.Enqueue(new HttpCompositeDirective(x + "&devicetype=2&deviceid=" + Common.GetUniqueId(), async ret =>
             {
                 await Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
                 {
