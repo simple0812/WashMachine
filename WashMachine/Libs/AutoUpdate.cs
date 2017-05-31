@@ -29,27 +29,34 @@ namespace WashMachine.Libs
 
         public static async Task<bool> CheckUpdate()
         {
-            using (HttpClient client = new HttpClient())
+            try
             {
-                var uri = new Uri($"http://{App.SERVER_ADDR}:{App.SERVER_PORT}/api/version");
-                var response = await client.GetAsync(uri);
-                if (response.EnsureSuccessStatusCode().StatusCode.ToString().ToLower() == "ok")
+                using (HttpClient client = new HttpClient())
                 {
-                    string responseBody = await response.Content.ReadAsStringAsync();
-                    var x = JsonConvert.DeserializeObject<JsonResult>(responseBody);
-                    if (x.code != "success")
+                    var uri = new Uri($"http://{App.SERVER_ADDR}:{App.SERVER_PORT}/api/version");
+                    var response = await client.GetAsync(uri);
+                    if (response.EnsureSuccessStatusCode().StatusCode.ToString().ToLower() == "ok")
                     {
-                        return false;
+                        string responseBody = await response.Content.ReadAsStringAsync();
+                        var x = JsonConvert.DeserializeObject<JsonResult>(responseBody);
+                        if (x.code != "success")
+                        {
+                            return false;
+                        }
+
+                        var p = JObject.FromObject(x.result);
+                        int lastVersion = int.TryParse(p["ver"].ToString(), out lastVersion) ? lastVersion : 0;
+
+                        path = p["path"].ToString();
+
+                        return lastVersion > GetCurrentVersion();
                     }
 
-                    var p = JObject.FromObject(x.result);
-                    int lastVersion = int.TryParse(p["ver"].ToString(), out lastVersion) ? lastVersion : 0;
-
-                    path = p["path"].ToString();
-
-                    return lastVersion > GetCurrentVersion();
+                    return false;
                 }
-
+            }
+            catch (Exception)
+            {
                 return false;
             }
         }
