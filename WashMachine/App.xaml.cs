@@ -112,20 +112,20 @@ namespace WashMachine
                 // 确保当前窗口处于活动状态
                 Window.Current.Activate();
 
-                Task.Run(async () =>
-                {
-                    await SerialCreater.Instance.Build();
-                    SimWorker.Instance.Enqueue(new LocationCompositeDirective(x =>
-                    {
-                        var cnetScans = x.Result as CnetScan;
-                        if (cnetScans == null) return;
-                        var url =
-                            $"http://{SERVER_ADDR}:{SERVER_PORT}/api/sim/location?mcc={cnetScans.MCC}&mnc={cnetScans.MNC}&lac={cnetScans.Lac}&ci={cnetScans.Cellid}&deviceid={Common.GetUniqueId()}&devicetype=2";
-                        SimWorker.Instance.Enqueue(new HttpCompositeDirective(url, p =>
-                        {
-                        }));
-                    }));
-                });
+//                Task.Run(async () =>
+//                {
+//                    await SerialCreater.Instance.Build();
+//                    SimWorker.Instance.Enqueue(new LocationCompositeDirective(x =>
+//                    {
+//                        var cnetScans = x.Result as CnetScan;
+//                        if (cnetScans == null) return;
+//                        var url =
+//                            $"http://{SERVER_ADDR}:{SERVER_PORT}/api/sim/location?mcc={cnetScans.MCC}&mnc={cnetScans.MNC}&lac={cnetScans.Lac}&ci={cnetScans.Cellid}&deviceid={Common.GetUniqueId()}&devicetype=2";
+//                        SimWorker.Instance.Enqueue(new HttpCompositeDirective(url, p =>
+//                        {
+//                        }));
+//                    }));
+//                });
             }
         }
 

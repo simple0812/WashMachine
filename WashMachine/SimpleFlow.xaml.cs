@@ -127,11 +127,11 @@ namespace WashMachine
                 pbAppend.IsActive = false;
                 pbConcentrate.IsActive = false;
 
-                if (p.DeviceId == 1)
+                if (p.DeviceId == 2)
                 {
                     pbAppend.IsActive = true;
                 }
-                else if (p.DeviceId == 2)
+                else if (p.DeviceId == 1)
                 {
                     pbConcentrate.IsActive = true;
                 }
