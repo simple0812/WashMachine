@@ -51,7 +51,9 @@ namespace WashMachine.Protocols.Helper
             foreach (var each in dis)
             {
                 Debug.WriteLine("portname:" + each.Name);
-                if (each.Name.IndexOf("USB", StringComparison.Ordinal) == -1 && each.Name != "MINWINPC") continue;
+                if (each.Name.IndexOf("USB", StringComparison.Ordinal) == -1 
+                    && each.Name != "MINWINPC" 
+                    && each.Name.IndexOf("Virtual Serial Port", StringComparison.Ordinal) == -1) continue;
 
                 var device = await SerialDevice.FromIdAsync(each.Id);
                 if (device == null)
